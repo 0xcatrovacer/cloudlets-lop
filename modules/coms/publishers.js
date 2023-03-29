@@ -29,7 +29,7 @@ const transferData = (socket, senderId, dataBin, format, receiverSocket) => {
         [SENDER_PARAM]: senderId,
         [DATA_PARAM]: dataBin,
         [DATA_FORMAT_PARAM]: format,
-    }); 
+    });
 };
 
 const transferTask = (socket, senderId, taskObject, receiverSocket) => {
@@ -39,4 +39,4 @@ const transferTask = (socket, senderId, taskObject, receiverSocket) => {
     });
 };
 
-module.exports = { storageUpdate, cpuUpdate, transferData, transferTask };
+export { storageUpdate, cpuUpdate, transferData, transferTask };
