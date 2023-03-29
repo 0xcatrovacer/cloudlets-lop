@@ -2,8 +2,9 @@ import { exec } from 'child_process';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {
-        if (err || stderr) fn(err, stderr, null);
-        else {
+        if (err || stderr) {
+            fn(err, stderr, null);
+        } else {
             const arr = stdout.split('\n');
             let ip = [];
             for (let i = 0; i < arr.length; i++) {
@@ -27,7 +28,7 @@ const getBandWidth = (adapter, fn) => {
     });
 };
 
-const ifconfig = (timeInterval, fn) => {
+const bandwidthUsage = (timeInterval, fn) => {
     let rx = null,
         tx = null;
     setInterval(() => {
@@ -54,4 +55,4 @@ const ifconfig = (timeInterval, fn) => {
     }, timeInterval);
 };
 
-export default ifconfig;
+export { bandwidthUsage };
