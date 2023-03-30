@@ -7,7 +7,7 @@ const getRequest = () => {
         getRandomInteger(1, 10)
     );
     check = [...new Set(check)];
-    check.sort(function (a, b) {
+    check.sort((a, b) => {
         if (a.length === b.length) return a < b ? -1 : 1;
         return a.length < b.length ? -1 : 1;
     });
@@ -21,8 +21,7 @@ const getRequest = () => {
 
 const taskSimulator = (timeInterval, callback) => {
     setInterval(() => {
-        const task = getRequest();
-        callback(task);
+        Boolean(getRandomInteger(1, 10) % 2) && callback(getRequest());
     }, timeInterval);
 };
 
