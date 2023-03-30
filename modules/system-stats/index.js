@@ -14,16 +14,15 @@ import {
     NETWORK_BANDWIDTH_STATE,
     STORAGE_STATE,
 } from '../information-manager/constants';
+import { transferData } from '../transfers';
 import { monitorBandwidthUsage } from './bandwidth-calc';
 import { HIG_STATE, MID_STATE, TIME_INTERVAL } from './constants.js';
 import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
 
 const initialiseSystemMonitor = () => {
-    const timeInterval = process.env.STAT_POLL_INTERVAL;
-
     // monitor bandwidth
-    monitorBandwidthUsage(timeInterval, bandwidthState => {
+    monitorBandwidthUsage(TIME_INTERVAL, bandwidthState => {
         if (
             getNodeStatInformation(DEVICE_ID, NETWORK_BANDWIDTH_STATE) ===
             bandwidthState
@@ -36,7 +35,7 @@ const initialiseSystemMonitor = () => {
     });
 
     // monitor CPU usage
-    monitorCpuUsage(timeInterval, cpuState => {
+    monitorCpuUsage(TIME_INTERVAL, cpuState => {
         if (getNodeStatInformation(DEVICE_ID, CPU_STATE) === cpuState) return;
 
         cpuState !== MID_STATE &&
@@ -45,7 +44,7 @@ const initialiseSystemMonitor = () => {
     });
 
     // monitor disk usage
-    monitorDiskUsage(timeInterval, diskState => {
+    monitorDiskUsage(TIME_INTERVAL, diskState => {
         if (getNodeInformation(DEVICE_ID, STORAGE_STATE) === diskState) return;
 
         diskState !== MID_STATE &&
