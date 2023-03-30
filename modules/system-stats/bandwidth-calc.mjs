@@ -1,9 +1,11 @@
 import { exec } from 'child_process';
+import { ADAPTER, BANDWIDTH, THRESHOLD0_BANDWIDTH, THRESHOLD1_BANDWIDTH } from './constants.mjs';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {
-        if (err || stderr) fn(err, stderr, null);
-        else {
+        if (err || stderr) {
+            fn(err, stderr, null);
+        } else {
             const arr = stdout.split('\n');
             let ip = [];
             for (let i = 0; i < arr.length; i++) {
@@ -27,13 +29,12 @@ const getBandWidth = (adapter, fn) => {
     });
 };
 
-const bandwidth = (timeInterval, fn) => {
+const monitorBandwidthUsage = (timeInterval, fn) => {
     let rx = null,
         tx = null;
     setInterval(() => {
-        const adapter = process.env.ADAPTER;
         if (rx == null || tx == null) {
-            getBandWidth(adapter, (err, stderr, bw) => {
+            getBandWidth(ADAPTER, (err, stderr, bw) => {
                 if (err || stderr) console.error(err, stderr);
                 else {
                     rx = bw.rx;
@@ -41,17 +42,24 @@ const bandwidth = (timeInterval, fn) => {
                 }
             });
         } else {
-            getBandWidth(adapter, (err, stderr, bw) => {
+            getBandWidth(ADAPTER, (err, stderr, bw) => {
                 if (err || stderr) console.error(err, stderr);
                 else {
                     let band = (bw.rx + bw.tx - rx - tx) / 100;
                     rx = bw.rx;
                     tx = bw.tx;
-                    fn(band);
+                    let normalised_bw = band / BANDWIDTH;
+                    let string =
+                        normalised_bw <= THRESHOLD0_BANDWIDTH
+                            ? 'LOW'
+                            : normalised_bw > THRESHOLD1_BANDWIDTH
+                            ? 'HIG'
+                            : 'MID';
+                    fn(string);
                 }
             });
         }
     }, timeInterval);
 };
 
-export default bandwidth;
+export { monitorBandwidthUsage };

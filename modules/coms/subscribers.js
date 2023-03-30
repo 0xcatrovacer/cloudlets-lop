@@ -21,9 +21,4 @@ const transferTaskSub = (socket, callback) => {
     socket.on(TRANSFER_TASK_MSG, data => callback(data));
 };
 
-export default {
-    storageUpdateSub,
-    cpuUpdateSub,
-    transferDataSub,
-    transferTaskSub,
-};
+export { storageUpdateSub, cpuUpdateSub, transferDataSub, transferTaskSub };
