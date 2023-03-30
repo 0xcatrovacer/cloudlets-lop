@@ -1,5 +1,10 @@
 import { exec } from 'child_process';
-import { ADAPTER, BANDWIDTH, THRESHOLD0_BANDWIDTH, THRESHOLD1_BANDWIDTH, TOTAL_BANDWIDTH } from './constants.mjs';
+import {
+    ADAPTER,
+    THRESHOLD0_BANDWIDTH,
+    THRESHOLD1_BANDWIDTH,
+    TOTAL_BANDWIDTH,
+} from './constants.mjs';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {
