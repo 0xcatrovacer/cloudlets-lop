@@ -28,7 +28,7 @@ const getBandWidth = (adapter, fn) => {
     });
 };
 
-const bandwidthUsage = (timeInterval, fn) => {
+const monitorBandwidthUsage = (timeInterval, fn) => {
     let rx = null,
         tx = null;
     setInterval(() => {
@@ -55,4 +55,4 @@ const bandwidthUsage = (timeInterval, fn) => {
     }, timeInterval);
 };
 
-export { bandwidthUsage };
+export { monitorBandwidthUsage };
