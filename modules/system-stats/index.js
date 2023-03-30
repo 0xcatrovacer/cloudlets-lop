@@ -14,10 +14,10 @@ import {
     NETWORK_BANDWIDTH_STATE,
     STORAGE_STATE,
 } from '../information-manager/constants';
+import { monitorBandwidthUsage } from './bandwidth-calc';
 import { MID_STATE } from './constants.mjs';
 import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
-import { monitorBandwidthUsage } from './ifconfig';
 
 const initialiseSystemMonitor = () => {
     const timeInterval = process.env.STAT_POLL_INTERVAL;
