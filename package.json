@@ -22,6 +22,7 @@
     "check-disk-space": "^3.3.0",
     "dotenv": "^16.0.2",
     "nodemon": "^2.0.15",
+    "seedrandom": "^3.0.5",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1"
   }
