@@ -1,5 +1,6 @@
 const { setupCloudlet } = require('./modules/cloudlet');
 const { initialiseSystemMonitor } = require('./modules/system-stats');
+const { listenEndDevices } = require('./modules/task-controller');
 
 require('dotenv').config();
 
@@ -11,3 +12,6 @@ initialiseSystemMonitor();
 
 // start cloudlet
 setupCloudlet();
+
+// Start listening to devices
+listenEndDevices();
