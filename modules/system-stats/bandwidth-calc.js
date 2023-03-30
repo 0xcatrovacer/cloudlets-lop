@@ -4,7 +4,7 @@ import {
     THRESHOLD0_BANDWIDTH,
     THRESHOLD1_BANDWIDTH,
     TOTAL_BANDWIDTH,
-} from './constants.mjs';
+} from './constants.js';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {

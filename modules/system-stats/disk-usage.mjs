@@ -4,7 +4,7 @@ import {
     MID_STATE,
     THRESHOLD0_DISK,
     THRESHOLD1_DISK,
-} from './constants.mjs';
+} from './constants.js';
 
 const monitorDiskUsage = (timeInterval, callback) => {
     setInterval(() => {

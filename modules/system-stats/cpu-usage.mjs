@@ -4,7 +4,7 @@ import {
     MID_STATE,
     THRESHOLD0_CPU,
     THRESHOLD1_CPU,
-} from './constants.mjs';
+} from './constants.js';
 
 const monitorCpuUsage = (timeInterval, callback) => {
     setInterval(() => {

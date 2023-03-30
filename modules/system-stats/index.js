@@ -15,7 +15,7 @@ import {
     STORAGE_STATE,
 } from '../information-manager/constants';
 import { monitorBandwidthUsage } from './bandwidth-calc';
-import { MID_STATE } from './constants.mjs';
+import { HIG_STATE, MID_STATE, TIME_INTERVAL } from './constants.js';
 import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
 
