@@ -1,20 +1,20 @@
 import { CLIENT_CONNECTION, SERVER_CONNECTION } from './constants';
 
-const addClientConnection = (deviceId, socketId) => {
+const addClientConnection = (deviceId, socket) => {
     if (global.connections[deviceId])
-        global.connections[deviceId][CLIENT_CONNECTION] = socketId;
+        global.connections[deviceId][CLIENT_CONNECTION] = socket;
     else
         global.connections[deviceId] = {
-            [CLIENT_CONNECTION]: socketId,
+            [CLIENT_CONNECTION]: socket,
         };
 };
 
-const addServerConnection = (deviceId, socketId) => {
+const addServerConnection = (deviceId, socket) => {
     if (global.connections[deviceId])
-        global.connections[deviceId][SERVER_CONNECTION] = socketId;
+        global.connections[deviceId][SERVER_CONNECTION] = socket;
     else
         global.connections[deviceId] = {
-            [SERVER_CONNECTION]: socketId,
+            [SERVER_CONNECTION]: socket,
         };
 };
 
