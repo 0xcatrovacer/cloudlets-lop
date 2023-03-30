@@ -27,7 +27,7 @@ const getBandWidth = (adapter, fn) => {
     });
 };
 
-const ifconfig = (timeInterval, fn) => {
+const bandwidth = (timeInterval, fn) => {
     let rx = null,
         tx = null;
     setInterval(() => {
@@ -44,14 +44,14 @@ const ifconfig = (timeInterval, fn) => {
             getBandWidth(adapter, (err, stderr, bw) => {
                 if (err || stderr) console.error(err, stderr);
                 else {
-                    let bandwidth = (bw.rx + bw.tx - rx - tx) / 100;
+                    let band = (bw.rx + bw.tx - rx - tx) / 100;
                     rx = bw.rx;
                     tx = bw.tx;
-                    fn(bandwidth);
+                    fn(band);
                 }
             });
         }
     }, timeInterval);
 };
 
-export default ifconfig;
+export default bandwidth;
