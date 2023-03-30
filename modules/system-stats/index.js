@@ -19,7 +19,9 @@ import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
 import { monitorBandwidthUsage } from './ifconfig';
 
-const initialiseSystemMonitor = timeInterval => {
+const initialiseSystemMonitor = () => {
+    const timeInterval = process.env.STAT_POLL_INTERVAL;
+
     // monitor bandwidth
     monitorBandwidthUsage(timeInterval, bandwidthState => {
         if (
