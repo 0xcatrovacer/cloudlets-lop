@@ -2,8 +2,9 @@ export const STORAGE_MSG = 'storage_update';
 export const CPU_MSG = 'cpu_update';
 export const TRANSFER_DATA_MSG = 'transfer_data';
 export const TRANSFER_TASK_MSG = 'transfer_task';
+export const TRANSFER_TASK_BROADCAST_MSG = 'transfer_task_broadcast';
 
-export const SENDER_PARAM = 'sender';
+export const DEVICE_ID_PARAM = 'device_id';
 export const STATE_PARAM = 'state';
 export const DATA_PARAM = 'data';
 export const DATA_FORMAT_PARAM = 'format';
