@@ -1,25 +1,29 @@
-const seedrandom = require('seedrandom');
-const rng = seedrandom();
+function getRandomInteger(min, max) {
+    return Math.floor(Math.random * (max - min + 1)) + min;
+}
 
-const getRandomInteger = (min, max) => {
-    return Math.floor(rng() * (max - min + 1)) + min;
-};
-
-const requestTask = () => {
+const getRequest = () => {
     let check = Array.from({ length: getRandomInteger(1, 10) }, () =>
         getRandomInteger(1, 10)
     );
     check = [...new Set(check)];
-    check.sort((a, b) => {
-        if (a.length == b.length) return a < b ? -1 : 1;
-        return a.lenght < b.length ? -1 : 1;
+    check.sort(function (a, b) {
+        if (a.length === b.length) return a < b ? -1 : 1;
+        return a.length < b.length ? -1 : 1;
     });
-
-    return {
+    const task = {
         id: getRandomInteger(1000, 10000),
         name: 'dummyname',
         swList: check,
     };
+    return task;
 };
 
-export { requestTask };
+const taskSimulator = (timeInterval, callback) => {
+    setInterval(() => {
+        const task = getRequest();
+        callback(task);
+    }, timeInterval);
+};
+
+export { taskSimulator };
