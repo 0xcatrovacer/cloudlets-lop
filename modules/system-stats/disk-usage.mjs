@@ -1,25 +1,32 @@
 import {
+    HIG_STATE,
+    LOW_STATE,
+    MID_STATE,
     THRESHOLD0_DISK,
     THRESHOLD1_DISK,
-
 } from './constants.mjs';
 
-//Add function to calculate DiskSpace Usage
+const monitorDiskUsage = (timeInterval, callback) => {
+    setInterval(() => {
+        callback(getDiskStatus());
+    }, timeInterval);
+};
 
-export const sendDiskStatus = () => {
+const getDiskStatus = () => {
     const actualDiskUsage = calcDiskUsage();
 
     //to return Disk Usage Status - 'HIG'/'MID'/'LOW'
     if (actualDiskUsage <= THRESHOLD0_DISK) {
-        return 'LOW';
+        return LOW_STATE;
+    } else if (
+        THRESHOLD0_DISK < actualDiskUsage &&
+        actualDiskUsage <= THRESHOLD1_DISK
+    ) {
+        return MID_STATE;
+    } else {
+        return HIG_STATE;
     }
-    else if (THRESHOLD0_DISK < actualDiskUsage && actualDiskUsage <= THRESHOLD1_DISK){
-        return 'MID';
-    }
-    else {
-        return 'HIG';
-    }
-}
+};
 
 const calcDiskUsage = () => {
     const actualDiskUsage = Math.random();
@@ -28,4 +35,6 @@ const calcDiskUsage = () => {
         ---> const diskUsage = require('check-disk-space').default;
     */
     return actualDiskUsage;
-}
+};
+
+export { monitorDiskUsage, getDiskStatus };

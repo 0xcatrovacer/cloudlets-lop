@@ -1,24 +1,31 @@
 import {
+    HIG_STATE,
+    LOW_STATE,
+    MID_STATE,
     THRESHOLD0_CPU,
     THRESHOLD1_CPU,
-
 } from './constants.mjs';
 
-//Add function to calculate CPU Usage
+const monitorCpuUsage = (timeInterval, callback) => {
+    setInterval(() => {
+        callback(getCPUStatus());
+    }, timeInterval);
+};
 
-export const sendCPUStatus = () => {
+const getCPUStatus = () => {
     const actualCPUUsage = calcCPUUsage();
     //to return CPU Status - 'HIG'/'MID'/'LOW'
     if (actualCPUUsage <= THRESHOLD0_CPU) {
-        return 'LOW';
+        return LOW_STATE;
+    } else if (
+        THRESHOLD0_CPU < actualCPUUsage &&
+        actualCPUUsage <= THRESHOLD1_CPU
+    ) {
+        return MID_STATE;
+    } else {
+        return HIG_STATE;
     }
-    else if (THRESHOLD0_CPU < actualCPUUsage && actualCPUUsage <= THRESHOLD1_CPU){
-        return 'MID';
-    }
-    else {
-        return 'HIG';
-    }
-}
+};
 
 const calcCPUUsage = () => {
     const actualCPUUsage = Math.random();
@@ -39,4 +46,6 @@ const calcCPUUsage = () => {
     const avg_cpu_util = total_cpu_util/cpu_data_arr.length //averaged cpu usage. This is our actualCPUUsage.
     */
     return actualCPUUsage;
-}
+};
+
+export { monitorCpuUsage, getCPUStatus as sendCPUStatus };
