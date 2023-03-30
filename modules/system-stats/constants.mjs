@@ -1,3 +1,9 @@
+export const THRESHOLD0_BANDWIDTH = 0.4; //Lower threshold for bandwidth
+export const THRESHOLD1_BANDWIDTH = 0.8; //Upper threshold for bandwidth
+
+export const TOTAL_BANDWIDTH = process.env.TOTAL_BANDWIDTH // The Bandwidth capacity
+export const ADAPTER = process.env.ADAPTER;
+
 export const THRESHOLD0_DISK = 0.4; //Lower threshold for memory
 export const THRESHOLD1_DISK = 0.8; //Upper threshold for memory
 export const THRESHOLD0_CPU = 0.2; //Lower threshold for CPU

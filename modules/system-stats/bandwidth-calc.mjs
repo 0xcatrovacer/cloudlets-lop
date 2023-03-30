@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import { ADAPTER, BANDWIDTH, THRESHOLD0_BANDWIDTH, THRESHOLD1_BANDWIDTH, TOTAL_BANDWIDTH } from './constants.mjs';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {
@@ -32,9 +33,8 @@ const monitorBandwidthUsage = (timeInterval, fn) => {
     let rx = null,
         tx = null;
     setInterval(() => {
-        const adapter = process.env.ADAPTER;
         if (rx == null || tx == null) {
-            getBandWidth(adapter, (err, stderr, bw) => {
+            getBandWidth(ADAPTER, (err, stderr, bw) => {
                 if (err || stderr) console.error(err, stderr);
                 else {
                     rx = bw.rx;
@@ -42,13 +42,20 @@ const monitorBandwidthUsage = (timeInterval, fn) => {
                 }
             });
         } else {
-            getBandWidth(adapter, (err, stderr, bw) => {
+            getBandWidth(ADAPTER, (err, stderr, bw) => {
                 if (err || stderr) console.error(err, stderr);
                 else {
-                    let bandwidth = (bw.rx + bw.tx - rx - tx) / 100;
+                    let band = (bw.rx + bw.tx - rx - tx) / 100;
                     rx = bw.rx;
                     tx = bw.tx;
-                    fn(bandwidth);
+                    let normalised_bw = band / TOTAL_BANDWIDTH;
+                    let state =
+                        normalised_bw <= THRESHOLD0_BANDWIDTH
+                            ? 'LOW'
+                            : normalised_bw > THRESHOLD1_BANDWIDTH
+                            ? 'HIG'
+                            : 'MID';
+                    fn(state);
                 }
             });
         }
