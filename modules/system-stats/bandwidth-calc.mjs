@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { ADAPTER, BANDWIDTH, THRESHOLD0_BANDWIDTH, THRESHOLD1_BANDWIDTH } from './constants.mjs';
+import { ADAPTER, BANDWIDTH, THRESHOLD0_BANDWIDTH, THRESHOLD1_BANDWIDTH, TOTAL_BANDWIDTH } from './constants.mjs';
 
 const getBandWidth = (adapter, fn) => {
     exec('ifconfig', (err, stdout, stderr) => {
@@ -48,14 +48,14 @@ const monitorBandwidthUsage = (timeInterval, fn) => {
                     let band = (bw.rx + bw.tx - rx - tx) / 100;
                     rx = bw.rx;
                     tx = bw.tx;
-                    let normalised_bw = band / BANDWIDTH;
-                    let string =
+                    let normalised_bw = band / TOTAL_BANDWIDTH;
+                    let state =
                         normalised_bw <= THRESHOLD0_BANDWIDTH
                             ? 'LOW'
                             : normalised_bw > THRESHOLD1_BANDWIDTH
                             ? 'HIG'
                             : 'MID';
-                    fn(string);
+                    fn(state);
                 }
             });
         }
