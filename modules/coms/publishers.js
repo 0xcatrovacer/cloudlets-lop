@@ -8,6 +8,7 @@ import {
     DATA_PARAM,
     DATA_FORMAT_PARAM,
     TASK_PARAM,
+    BANDWIDTH_MSG,
 } from './constants';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
@@ -21,6 +22,13 @@ const cpuUpdatePub = (socket, deviceId, cpuState) => {
     socket.emit(CPU_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [STATE_PARAM]: cpuState,
+    });
+};
+
+const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
+    socket.emit(BANDWIDTH_MSG, {
+        [DEVICE_ID_PARAM]: deviceId,
+        [STATE_PARAM]: bandwidthState,
     });
 };
 
@@ -54,6 +62,7 @@ const transferTaskBroadcast = (
 export {
     storageUpdatePub,
     cpuUpdatePub,
+    bandwidthUpdatePub,
     transferDataPub,
     transferTaskPub,
     transferTaskBroadcast,
