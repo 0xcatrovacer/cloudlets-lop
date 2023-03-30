@@ -11,3 +11,4 @@ export const STATE_PARAM = 'state';
 export const DATA_PARAM = 'data';
 export const DATA_FORMAT_PARAM = 'format';
 export const TASK_PARAM = 'task';
+export const AVAILABLE_APPLICATIONS_PARAM = 'available_applications';
