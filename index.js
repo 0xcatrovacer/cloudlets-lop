@@ -12,11 +12,11 @@ global.server = {};
 // load available applications data
 initApplicationsList();
 
+// start monitoring system
+initialiseSystemMonitor();
+
 // start cloudlet
 setupCloudlet();
 
 // Start listening to devices
 listenEndDevices();
-
-// start monitoring system
-initialiseSystemMonitor();
