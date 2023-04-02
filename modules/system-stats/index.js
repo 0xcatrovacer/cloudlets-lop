@@ -50,6 +50,7 @@ const initialiseSystemMonitor = () => {
         diskState !== MID_STATE &&
             storageUpdatePub(global.server, DEVICE_ID, diskState);
         setNodeInformation(DEVICE_ID, STORAGE_STATE, diskState);
+        if (diskState === HIG_STATE) transferData();
     });
 };
 
