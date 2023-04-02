@@ -1,3 +1,4 @@
+import { DEVICE_ID_PARAM } from '../coms/constants';
 import { CLIENT_CONNECTION, SERVER_CONNECTION } from './constants';
 
 const addClientConnection = (deviceId, socket) => {
@@ -26,9 +27,17 @@ const getServerConnection = deviceId => {
     return global.connections[deviceId]?.[SERVER_CONNECTION];
 };
 
+const getAllConnections = () => {
+    return Object.entries(obj).map(([deviceId, connection]) => ({
+        [DEVICE_ID_PARAM]: deviceId,
+        ...connection,
+    }));
+};
+
 export {
     addClientConnection,
     addServerConnection,
     getClientConnection,
     getServerConnection,
+    getAllConnections,
 };
