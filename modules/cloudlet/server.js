@@ -7,10 +7,21 @@ import { transferDataSub, transferTaskSub } from '../coms/subscribers';
 import {
     ADDRESS_PARAM,
     AVAILABLE_APPLICATIONS_PARAM,
+    DATA_FORMAT_PARAM,
+    DATA_PARAM,
     DEVICE_ID_PARAM,
 } from '../coms/constants';
-import { setNodeInformation } from '../information-manager';
-import { APPLICATIONS_STATE } from '../information-manager/constants';
+import {
+    getNodeInformation,
+    getNodeStatInformation,
+    setNodeInformation,
+} from '../information-manager';
+import {
+    APPLICATIONS_STATE,
+    STORAGE_STATE,
+} from '../information-manager/constants';
+import { HIG_STATE } from '../system-stats/constants';
+import { transferData } from '../transfers';
 
 const serverSetup = (io, reverseConnectClient) => {
     io.on('connection', socket => {
@@ -32,7 +43,17 @@ const serverSetup = (io, reverseConnectClient) => {
         );
 
         // subscribe to transfer events
-        transferDataSub(socket, () => {});
+        transferDataSub(
+            socket,
+            ({ [DATA_PARAM]: data, [DATA_FORMAT_PARAM]: dataFormat }) => {
+                if (
+                    getNodeStatInformation(DEVICE_ID, STORAGE_STATE) ===
+                    HIG_STATE
+                )
+                    transferData(data, dataFormat);
+            }
+        );
+
         transferTaskSub(socket, () => {});
     });
 };
