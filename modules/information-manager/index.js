@@ -1,5 +1,10 @@
 import { DEVICE_ID_PARAM, STATE_PARAM } from '../coms/constants';
-import { CPU_STATE, STORAGE_STATE } from './constants';
+import {
+    ALL_APPLICATIONS_LIST,
+    APPLICATIONS_STATE,
+    CPU_STATE,
+    STORAGE_STATE,
+} from './constants';
 
 const getNodeInformation = deviceId => {
     return global.connections[deviceId].stats;
@@ -30,10 +35,16 @@ const handleReceiveCpuUpdate = ({
     setNodeInformation(deviceId, CPU_STATE, state);
 };
 
+const initApplicationsList = () => {
+    const allApplications = ALL_APPLICATIONS_LIST;
+    setNodeInformation(DEVICE_ID, APPLICATIONS_STATE, allApplications);
+};
+
 export {
     getNodeInformation,
     getNodeStatInformation,
     setNodeInformation,
     handleReceiveStorageUpdate,
     handleReceiveCpuUpdate,
+    initApplicationsList,
 };
