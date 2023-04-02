@@ -9,6 +9,8 @@ import {
     DATA_FORMAT_PARAM,
     TASK_PARAM,
     BANDWIDTH_MSG,
+    AVAILABLE_APPLICATIONS_MSG,
+    AVAILABLE_APPLICATIONS_PARAM,
 } from './constants';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
@@ -47,6 +49,18 @@ const transferTaskPub = (socket, deviceId, taskObject, receiverSocket) => {
     });
 };
 
+const applicationsAvailablePub = (
+    socket,
+    deviceId,
+    availableApplications,
+    receiverSocket
+) => {
+    socket.emit(AVAILABLE_APPLICATIONS_MSG, {
+        [DEVICE_ID_PARAM]: deviceId,
+        [AVAILABLE_APPLICATIONS_PARAM]: availableApplications,
+    });
+};
+
 const transferTaskBroadcast = (
     socket,
     deviceId,
@@ -66,4 +80,5 @@ export {
     transferDataPub,
     transferTaskPub,
     transferTaskBroadcast,
+    applicationsAvailablePub,
 };

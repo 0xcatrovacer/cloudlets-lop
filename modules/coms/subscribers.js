@@ -4,6 +4,7 @@ import {
     TRANSFER_DATA_MSG,
     TRANSFER_TASK_MSG,
     TRANSFER_TASK_BROADCAST_MSG,
+    AVAILABLE_APPLICATIONS_MSG,
 } from './constants';
 
 const storageUpdateSub = (socket, ...callbacks) => {
@@ -34,10 +35,17 @@ const transferTaskBroadcastSub = (socket, ...callbacks) => {
     );
 };
 
+const availableApplicationsSub = (socket, ...callbacks) => {
+    socket.on(AVAILABLE_APPLICATIONS_MSG, data =>
+        callbacks.forEach(callback => callback(data))
+    );
+};
+
 export {
     storageUpdateSub,
     cpuUpdateSub,
     transferDataSub,
     transferTaskSub,
     transferTaskBroadcastSub,
+    availableApplicationsSub,
 };
