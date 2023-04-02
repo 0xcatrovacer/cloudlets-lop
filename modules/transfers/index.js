@@ -58,8 +58,8 @@ const transferTask = () => {
     // check endDeviceSimulator for reference to how a task looks -- line #14
     // then make a param in this function and set the default value as that dummy task
     // now for tasks we check cpu and storage both, so we get 4 combos -- LL, HL, LH, HH (H=HIGH, L=LOW) for each node
-    // we check if we have LL or LH or HL nodes in this order and use transferTaskPub to transfer task there :: we ignore HH 
-    // if there are no nodes which are LL, LH or HL; we simply call the transferTaskToCloud func 
+    // we check if we have LL or LH or HL nodes in this order and use transferTaskPub to transfer task there :: we ignore HH
+    // if there are no nodes which are LL, LH or HL; we simply call the transferTaskToCloud func
 };
 
-export { transferData };
+export { transferData, transferTask };
