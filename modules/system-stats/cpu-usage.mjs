@@ -48,4 +48,4 @@ const calcCPUUsage = () => {
     return actualCPUUsage;
 };
 
-export { monitorCpuUsage, getCPUStatus as sendCPUStatus };
+export { monitorCpuUsage };

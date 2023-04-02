@@ -13,12 +13,14 @@ import {
     CPU_STATE,
     NETWORK_BANDWIDTH_STATE,
     STORAGE_STATE,
+    AFFINITY_STATE
 } from '../information-manager/constants';
 import { transferData } from '../transfers';
 import { monitorBandwidthUsage } from './bandwidth-calc';
 import { HIG_STATE, MID_STATE, TIME_INTERVAL } from './constants.js';
 import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
+import { monitorNAffinity } from './naffinity-calc.mjs';
 
 const initialiseSystemMonitor = () => {
     // monitor bandwidth
@@ -52,6 +54,11 @@ const initialiseSystemMonitor = () => {
         setNodeInformation(DEVICE_ID, STORAGE_STATE, diskState);
         if (diskState === HIG_STATE) transferData();
     });
+
+    //monitor N Affinity 
+    monitorNAffinity(TIME_INTERVAL, NAffinity => {
+        setNodeInformation(DEVICE_ID , AFFINITY_STATE , NAffinity);
+    });    
 };
 
 export { initialiseSystemMonitor };
