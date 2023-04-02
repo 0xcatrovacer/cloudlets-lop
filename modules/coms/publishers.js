@@ -32,7 +32,7 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
     });
 };
 
-const transferDataPub = (socket, deviceId, dataBin, format, receiverSocket) => {
+const transferDataPub = (socket, deviceId, dataBin, format) => {
     socket.emit(TRANSFER_DATA_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [DATA_PARAM]: dataBin,
