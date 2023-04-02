@@ -1,11 +1,23 @@
 // this file is supposed to receive tasks from the end device purposes we are
 // using end device simulator in simulator module
 
+import { TASK_PARAM } from '../coms/constants';
 import { taskSimulator } from '../simulator/endDeviceSimulator';
+import { transferTask } from '../transfers';
 import { TIME_INTERVAL } from './constants';
+import { checkTaskRunnable } from './validators';
 
 const listenEndDevices = () => {
-    taskSimulator(TIME_INTERVAL, task => {});
+    taskSimulator(TIME_INTERVAL, task => {
+        taskReciever(task);
+    });
 };
 
-export { initApplicationsList, listenEndDevices };
+const taskReciever = ({ [TASK_PARAM]: task }) => {
+    // Validate task
+    if (checkTaskRunnable(task)) return;
+    // If not runnable transfer task
+    transferTask(task);
+};
+
+export { initApplicationsList, listenEndDevices, taskReciever };

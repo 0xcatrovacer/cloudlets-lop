@@ -12,7 +12,6 @@ import {
     DEVICE_ID_PARAM,
 } from '../coms/constants';
 import {
-    getNodeInformation,
     getNodeStatInformation,
     setNodeInformation,
 } from '../information-manager';
@@ -22,6 +21,7 @@ import {
 } from '../information-manager/constants';
 import { HIG_STATE } from '../system-stats/constants';
 import { transferData } from '../transfers';
+import { taskReciever } from '../tasks';
 
 const serverSetup = (io, reverseConnectClient) => {
     io.on('connection', socket => {
@@ -54,7 +54,7 @@ const serverSetup = (io, reverseConnectClient) => {
             }
         );
 
-        transferTaskSub(socket, () => {});
+        transferTaskSub(socket, taskReciever);
     });
 };
 export { serverSetup };
