@@ -44,7 +44,7 @@ const transferDataPub = (socket, deviceId, dataBin, format) => {
     });
 };
 
-const transferTaskPub = (socket, deviceId, taskObject, receiverSocket) => {
+const transferTaskPub = (socket, deviceId, taskObject) => {
     socket.emit(TRANSFER_TASK_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [TASK_PARAM]: taskObject,
