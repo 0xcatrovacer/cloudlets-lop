@@ -1,7 +1,7 @@
 const { setupCloudlet } = require('./modules/cloudlet');
+const { initApplicationsList } = require('./modules/information-manager');
 const { initialiseSystemMonitor } = require('./modules/system-stats');
 const { listenEndDevices } = require('./modules/tasks');
-const { initApplicationsList } = require('./modules/tasks');
 
 require('dotenv').config();
 
