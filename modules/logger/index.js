@@ -1,5 +1,5 @@
-const logger = log => {
-    console.log(log);
+const logger = (...log) => {
+    console.log(...log);
 };
 
 export { logger };

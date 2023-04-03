@@ -1,3 +1,4 @@
+import { logger } from '../logger/index.js';
 import {
     N_AFFINITY_WEIGHT1,
     N_AFFINITY_WEIGHT2,
@@ -11,6 +12,7 @@ const getNAffinity = ({ TP, NP, TC, NC, TF, NF, w1, w2, w3 }) => {
 };
 
 const monitorNAffinity = (timeInterval, callback) => {
+    logger('monitor naffinity -- init');
     setInterval(() => {
         //Redefine these variables depending upon what our Time Window will be and how many tasks should be done in that window.
         const P_TASKS_COUNT = Math.random(); //No. of Tasks completed in past window = TP

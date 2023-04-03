@@ -1,3 +1,4 @@
+import { logger } from '../logger/index.js';
 import {
     HIG_STATE,
     LOW_STATE,
@@ -7,6 +8,7 @@ import {
 } from './constants.js';
 
 const monitorDiskUsage = (timeInterval, callback) => {
+    logger('monitor disk usage -- init');
     setInterval(() => {
         callback(getDiskStatus());
     }, timeInterval);

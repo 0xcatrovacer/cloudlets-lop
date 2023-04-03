@@ -1,5 +1,6 @@
 import { DEVICE_ID } from '../cloudlet/constants.js';
 import { DEVICE_ID_PARAM, STATE_PARAM } from '../coms/constants.js';
+import { logger } from '../logger/index.js';
 import {
     ALL_APPLICATIONS_LIST,
     APPLICATIONS_STATE,
@@ -28,6 +29,7 @@ const handleReceiveStorageUpdate = ({
     [DEVICE_ID_PARAM]: deviceId,
     [STATE_PARAM]: state,
 }) => {
+    // logger(`received storage update ${state} from ${deviceId}`);
     setNodeInformation(deviceId, STORAGE_STATE, state);
 };
 
@@ -35,6 +37,7 @@ const handleReceiveCpuUpdate = ({
     [DEVICE_ID_PARAM]: deviceId,
     [STATE_PARAM]: state,
 }) => {
+    // logger(`received cpu update ${state} from ${deviceId}`);
     setNodeInformation(deviceId, CPU_STATE, state);
 };
 

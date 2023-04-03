@@ -1,17 +1,25 @@
 import { DEVICE_ID } from '../cloudlet/constants.js';
 import { DEVICE_ID_PARAM } from '../coms/constants.js';
 import { transferDataPub } from '../coms/publishers.js';
-import { getAllConnections, getClientConnection } from '../connections-manager/index.js';
+import {
+    getAllConnections,
+    getClientConnection,
+} from '../connections-manager/index.js';
 import { STORAGE_STATE } from '../information-manager/constants.js';
+import { logger } from '../logger/index.js';
 import { LOW_STATE, MID_STATE } from '../system-stats/constants.js';
 import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants.js';
 
 const transferDataToCloud = data => {
-    console.log('data transfered to cloud', data);
+    console.log(`data transfered to cloud: bytes[${data}]`);
 };
 
 const transferTaskToCloud = task => {
     console.log('task transfered to cloud', task);
+};
+
+const receiveData = (data, format, deviecId) => {
+    logger(`receive data ${data.length}bytes from ${deviecId}`);
 };
 
 const transferData = (
@@ -62,4 +70,4 @@ const transferTask = () => {
     // if there are no nodes which are LL, LH or HL; we simply call the transferTaskToCloud func
 };
 
-export { transferData, transferTask };
+export { transferData, transferTask, receiveData };

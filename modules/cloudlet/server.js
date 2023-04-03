@@ -20,10 +20,12 @@ import {
     STORAGE_STATE,
 } from '../information-manager/constants.js';
 import { HIG_STATE } from '../system-stats/constants.js';
-import { transferData } from '../transfers/index.js';
+import { receiveData, transferData } from '../transfers/index.js';
 import { taskReciever } from '../tasks/index.js';
+import { logger } from '../logger/index.js';
 
 const serverSetup = (io, reverseConnectClient) => {
+    logger('setup server - initiated');
     io.on('connection', socket => {
         console.log('listening to new node on socket', socket.id);
 
@@ -45,16 +47,22 @@ const serverSetup = (io, reverseConnectClient) => {
         // subscribe to transfer events
         transferDataSub(
             socket,
-            ({ [DATA_PARAM]: data, [DATA_FORMAT_PARAM]: dataFormat }) => {
+            ({
+                [DATA_PARAM]: data,
+                [DATA_FORMAT_PARAM]: dataFormat,
+                [DEVICE_ID_PARAM]: deviceId,
+            }) => {
                 if (
                     getNodeStatInformation(DEVICE_ID, STORAGE_STATE) ===
                     HIG_STATE
                 )
                     transferData(data, dataFormat);
+                else receiveData(data, dataFormat, deviceId);
             }
         );
 
         transferTaskSub(socket, taskReciever);
     });
+    logger('setup server - done');
 };
 export { serverSetup };

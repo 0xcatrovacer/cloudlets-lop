@@ -5,9 +5,9 @@ export const TOTAL_BANDWIDTH = process.env.TOTAL_BANDWIDTH; // The Bandwidth cap
 export const ADAPTER = process.env.ADAPTER;
 
 export const THRESHOLD0_DISK = 0.4; //Lower threshold for memory
-export const THRESHOLD1_DISK = 0.8; //Upper threshold for memory
+export const THRESHOLD1_DISK = 0.9; //Upper threshold for memory
 
-export const THRESHOLD0_CPU = 0.2; //Lower threshold for CPU
+export const THRESHOLD0_CPU = 0.4; //Lower threshold for CPU
 export const THRESHOLD1_CPU = 0.9; //Upper threshold for CPU
 
 export const AFFINITY_THRESHOLD = 1.5; //Threshold for N

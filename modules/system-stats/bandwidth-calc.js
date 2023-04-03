@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import { logger } from '../logger/index.js';
 import {
     ADAPTER,
     THRESHOLD0_BANDWIDTH,
@@ -35,6 +36,7 @@ const getBandWidth = (adapter, fn) => {
 };
 
 const monitorBandwidthUsage = (timeInterval, fn) => {
+    logger('monitor bandwidth -- init');
     let rx = null,
         tx = null;
     setInterval(() => {

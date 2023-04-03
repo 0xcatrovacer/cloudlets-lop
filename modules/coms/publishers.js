@@ -1,3 +1,4 @@
+import { logger } from '../logger/index.js';
 import {
     STORAGE_MSG,
     CPU_MSG,
@@ -35,6 +36,7 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
 };
 
 const transferDataPub = (socket, deviceId, dataBin, format) => {
+    logger(`transferring data ${dataBin.length}bytes to ${deviceId}`);
     socket.emit(TRANSFER_DATA_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [DATA_PARAM]: dataBin,
