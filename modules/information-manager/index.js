@@ -1,10 +1,11 @@
-import { DEVICE_ID_PARAM, STATE_PARAM } from '../coms/constants';
+import { DEVICE_ID } from '../cloudlet/constants.js';
+import { DEVICE_ID_PARAM, STATE_PARAM } from '../coms/constants.js';
 import {
     ALL_APPLICATIONS_LIST,
     APPLICATIONS_STATE,
     CPU_STATE,
     STORAGE_STATE,
-} from './constants';
+} from './constants.js';
 
 const getNodeInformation = deviceId => {
     return global.connections[deviceId].stats;
@@ -15,7 +16,9 @@ const getNodeStatInformation = (deviceId, statName) => {
 };
 
 const setNodeInformation = (deviceId, statName, statValue) => {
-    if (!global.connections[deviceId].stats)
+    if (!global.connections[deviceId]) global.connections[deviceId] = {};
+
+    if (!global.connections[deviceId]?.stats)
         global.connections[deviceId].stats = {};
 
     global.connections[deviceId].stats[statName] = statValue;

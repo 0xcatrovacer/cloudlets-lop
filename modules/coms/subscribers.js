@@ -5,7 +5,7 @@ import {
     TRANSFER_TASK_MSG,
     TRANSFER_TASK_BROADCAST_MSG,
     AVAILABLE_APPLICATIONS_MSG,
-} from './constants';
+} from './constants.js';
 
 const storageUpdateSub = (socket, ...callbacks) => {
     socket.on(STORAGE_MSG, data =>

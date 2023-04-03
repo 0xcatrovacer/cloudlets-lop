@@ -1,9 +1,9 @@
-const { setupCloudlet } = require('./modules/cloudlet');
-const { initialiseSystemMonitor } = require('./modules/system-stats');
-const { listenEndDevices } = require('./modules/tasks');
-const { initApplicationsList } = require('./modules/tasks');
+import 'dotenv/config'; // for loading configs from .env
 
-require('dotenv').config();
+import { setupCloudlet } from './modules/cloudlet/index.js';
+import { initApplicationsList } from './modules/information-manager/index.js';
+import { initialiseSystemMonitor } from './modules/system-stats/index.js';
+import { listenEndDevices } from './modules/tasks/index.js';
 
 // establish global variables
 global.connections = {};

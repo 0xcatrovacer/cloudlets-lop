@@ -1,5 +1,5 @@
-import { DEVICE_ID_PARAM } from '../coms/constants';
-import { CLIENT_CONNECTION, SERVER_CONNECTION } from './constants';
+import { DEVICE_ID_PARAM } from '../coms/constants.js';
+import { CLIENT_CONNECTION, SERVER_CONNECTION } from './constants.js';
 
 const addClientConnection = (deviceId, socket) => {
     if (global.connections[deviceId])
@@ -28,7 +28,7 @@ const getServerConnection = deviceId => {
 };
 
 const getAllConnections = () => {
-    return Object.entries(obj).map(([deviceId, connection]) => ({
+    return Object.entries(global.connections).map(([deviceId, connection]) => ({
         [DEVICE_ID_PARAM]: deviceId,
         ...connection,
     }));

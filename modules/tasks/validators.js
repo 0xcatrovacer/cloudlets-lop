@@ -1,11 +1,11 @@
-import { DEVICE_ID } from '../cloudlet/constants';
-import { getNodeStatInformation } from '../information-manager';
+import { DEVICE_ID } from '../cloudlet/constants.js';
+import { getNodeStatInformation } from '../information-manager/index.js';
 import {
     APPLICATIONS_STATE,
     CPU_STATE,
     STORAGE_STATE,
-} from '../information-manager/constants';
-import { HIG_STATE } from '../system-stats/constants.mjs';
+} from '../information-manager/constants.js';
+import { HIG_STATE } from '../system-stats/constants.js';
 
 const checkSubset = (parentArray, subsetArray) => {
     return subsetArray.every(el => {

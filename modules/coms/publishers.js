@@ -11,7 +11,7 @@ import {
     BANDWIDTH_MSG,
     AVAILABLE_APPLICATIONS_MSG,
     AVAILABLE_APPLICATIONS_PARAM,
-} from './constants';
+} from './constants.js';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
     socket.emit(STORAGE_MSG, {

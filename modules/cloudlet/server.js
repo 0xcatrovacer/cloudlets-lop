@@ -1,27 +1,27 @@
-import { DEVICE_ID } from './constants';
+import { DEVICE_ID } from './constants.js';
 import {
     addClientConnection,
     getServerConnection,
-} from '../connections-manager/index';
-import { transferDataSub, transferTaskSub } from '../coms/subscribers';
+} from '../connections-manager/index.js';
+import { transferDataSub, transferTaskSub } from '../coms/subscribers.js';
 import {
     ADDRESS_PARAM,
     AVAILABLE_APPLICATIONS_PARAM,
     DATA_FORMAT_PARAM,
     DATA_PARAM,
     DEVICE_ID_PARAM,
-} from '../coms/constants';
+} from '../coms/constants.js';
 import {
     getNodeStatInformation,
     setNodeInformation,
-} from '../information-manager';
+} from '../information-manager/index.js';
 import {
     APPLICATIONS_STATE,
     STORAGE_STATE,
-} from '../information-manager/constants';
-import { HIG_STATE } from '../system-stats/constants';
-import { transferData } from '../transfers';
-import { taskReciever } from '../tasks';
+} from '../information-manager/constants.js';
+import { HIG_STATE } from '../system-stats/constants.js';
+import { transferData } from '../transfers/index.js';
+import { taskReciever } from '../tasks/index.js';
 
 const serverSetup = (io, reverseConnectClient) => {
     io.on('connection', socket => {

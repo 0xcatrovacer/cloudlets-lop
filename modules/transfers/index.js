@@ -1,11 +1,10 @@
-import { DEVICE_ID } from '../cloudlet/constants';
-import { DEVICE_ID_PARAM } from '../coms/constants';
-import { transferDataPub, transferTaskPub } from '../coms/publishers';
-import { getAllConnections, getClientConnection } from '../connections-manager';
-import { STORAGE_STATE } from '../information-manager/constants';
-import { LOW_STATE, MID_STATE } from '../system-stats/constants';
-import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants';
-
+import { DEVICE_ID } from '../cloudlet/constants.js';
+import { DEVICE_ID_PARAM } from '../coms/constants.js';
+import { transferDataPub, transferTaskPub } from '../coms/publishers.js';
+import { getAllConnections, getClientConnection } from '../connections-manager/index.js';
+import { STORAGE_STATE } from '../information-manager/constants.js';
+import { LOW_STATE, MID_STATE } from '../system-stats/constants.js';
+import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants.js';
 
 const transferDataToCloud = data => {
     console.log('data transfered to cloud', data);
