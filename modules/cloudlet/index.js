@@ -1,8 +1,8 @@
-const io = require('socket.io-client');
-const { Server } = require('socket.io');
-import { clientSetup } from './client';
-import { INITIAL_CONNECT_NODES, SERVER_PORT } from './constants';
-import { serverSetup } from './server';
+import { Server } from 'socket.io';
+import { io } from 'socket.io-client';
+import { clientSetup } from './client.js';
+import { INITIAL_CONNECT_NODES, SERVER_PORT } from './constants.js';
+import { serverSetup } from './server.js';
 
 const setupCloudlet = () => {
     const clients = INITIAL_CONNECT_NODES.map(nodeIp => io(nodeIp));

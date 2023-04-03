@@ -1,22 +1,22 @@
-import { DEVICE_ID } from '../cloudlet/constants';
+import { DEVICE_ID } from '../cloudlet/constants.js';
 import {
     bandwidthUpdatePub,
     cpuUpdatePub,
     storageUpdatePub,
-} from '../coms/publishers';
+} from '../coms/publishers.js';
 import {
     getNodeInformation,
     getNodeStatInformation,
     setNodeInformation,
-} from '../information-manager';
+} from '../information-manager/index.js';
 import {
     CPU_STATE,
     NETWORK_BANDWIDTH_STATE,
     STORAGE_STATE,
     AFFINITY_STATE
-} from '../information-manager/constants';
-import { transferData } from '../transfers';
-import { monitorBandwidthUsage } from './bandwidth-calc';
+} from '../information-manager/constants.js';
+import { transferData } from '../transfers/index.js';
+import { monitorBandwidthUsage } from './bandwidth-calc.js';
 import { HIG_STATE, MID_STATE, TIME_INTERVAL } from './constants.js';
 import { monitorCpuUsage } from './cpu-usage.mjs';
 import { monitorDiskUsage } from './disk-usage.mjs';
