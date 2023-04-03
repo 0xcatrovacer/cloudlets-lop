@@ -1,6 +1,6 @@
 import { DEVICE_ID } from '../cloudlet/constants';
 import { DEVICE_ID_PARAM } from '../coms/constants';
-import { transferDataPub } from '../coms/publishers';
+import { transferDataPub, transferTaskPub } from '../coms/publishers';
 import { getAllConnections, getClientConnection } from '../connections-manager';
 import { STORAGE_STATE } from '../information-manager/constants';
 import { LOW_STATE, MID_STATE } from '../system-stats/constants';
@@ -51,15 +51,51 @@ const transferData = (
     }
 };
 
-const transferTask = () => {
-    // TODO:
-    // take inspiration from the above function
-    // write a method to transfer task
-    // check endDeviceSimulator for reference to how a task looks -- line #14
-    // then make a param in this function and set the default value as that dummy task
-    // now for tasks we check cpu and storage both, so we get 4 combos -- LL, HL, LH, HH (H=HIGH, L=LOW) for each node
-    // we check if we have LL or LH or HL nodes in this order and use transferTaskPub to transfer task there :: we ignore HH
-    // if there are no nodes which are LL, LH or HL; we simply call the transferTaskToCloud func
+const transferTask = (
+    task = {
+        id: 10101,
+        name: 'dummyname',
+        swList: [1],
+    }
+) => {
+    const connections = getAllConnections();
+    let LL = [],
+        LH = [],
+        HL = [];
+
+    connections.forEach(connection => {
+        if (
+            connection?.stats[STORAGE_STATE] === LOW_STATE &&
+            connection?.stats[CPU_STATE] === LOW_STATE
+        )
+            LL.push(connection);
+        else if (
+            connection?.stats[STORAGE_STATE] === LOW_STATE &&
+            connection?.stats[CPU_STATE] === HIGH_STATE
+        )
+            LH.push(connection);
+        else if (
+            connection?.stats[STORAGE_STATE] === HIGH_STATE &&
+            connection?.stats[CPU_STATE] === LOW_STATE
+        )
+            HL.push(connection);
+    });
+
+    if (LL.length > 0) {
+        const randomDevice =
+            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+    } else if (LH.length > 0) {
+        const randomDevice =
+            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+    } else if (HL.length > 0) {
+        const randomDevice =
+            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+    } else {
+        transferTaskToCloud(task);
+    }
 };
 
 export { transferData, transferTask };
