@@ -8,9 +8,7 @@ import { TIME_INTERVAL } from './constants';
 import { checkTaskRunnable } from './validators';
 
 const listenEndDevices = () => {
-    taskSimulator(TIME_INTERVAL, task => {
-        taskReciever(task);
-    });
+    taskSimulator(TIME_INTERVAL, task => taskReciever(task));
 };
 
 const taskReciever = ({ [TASK_PARAM]: task }) => {
@@ -20,4 +18,4 @@ const taskReciever = ({ [TASK_PARAM]: task }) => {
     transferTask(task);
 };
 
-export { initApplicationsList, listenEndDevices, taskReciever };
+export { listenEndDevices, taskReciever };
