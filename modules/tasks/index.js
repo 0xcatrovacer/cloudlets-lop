@@ -2,7 +2,7 @@
 // using end device simulator in simulator module
 
 import { TASK_PARAM } from '../coms/constants.js';
-import { taskSimulator } from '../simulator/endDeviceSimulator.js';
+import { taskSimulator } from '../simulator/end-device-simulator.js';
 import { transferTask } from '../transfers/index.js';
 import { TIME_INTERVAL } from './constants.js';
 import { checkTaskRunnable } from './validators.js';
