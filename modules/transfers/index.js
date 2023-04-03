@@ -6,6 +6,7 @@ import { STORAGE_STATE } from '../information-manager/constants';
 import { LOW_STATE, MID_STATE } from '../system-stats/constants';
 import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants';
 
+
 const transferDataToCloud = data => {
     console.log('data transfered to cloud', data);
 };
