@@ -5,9 +5,9 @@ import {
     getAllConnections,
     getClientConnection,
 } from '../connections-manager/index.js';
-import { STORAGE_STATE } from '../information-manager/constants.js';
+import { CPU_STATE, STORAGE_STATE } from '../information-manager/constants.js';
 import { logger } from '../logger/index.js';
-import { LOW_STATE, MID_STATE } from '../system-stats/constants.js';
+import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
 import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants.js';
 
 const transferDataToCloud = data => {
@@ -83,11 +83,11 @@ const transferTask = (
             LL.push(connection);
         else if (
             connection?.stats[STORAGE_STATE] === LOW_STATE &&
-            connection?.stats[CPU_STATE] === HIGH_STATE
+            connection?.stats[CPU_STATE] === HIG_STATE
         )
             LH.push(connection);
         else if (
-            connection?.stats[STORAGE_STATE] === HIGH_STATE &&
+            connection?.stats[STORAGE_STATE] === HIG_STATE &&
             connection?.stats[CPU_STATE] === LOW_STATE
         )
             HL.push(connection);
