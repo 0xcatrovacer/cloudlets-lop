@@ -15,6 +15,7 @@ import {
 } from './constants.js';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
+    logger('sending storage state update: ', storageState);
     socket.emit(STORAGE_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [STATE_PARAM]: storageState,
@@ -36,7 +37,7 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
 };
 
 const transferDataPub = (socket, deviceId, dataBin, format) => {
-    logger(`transferring data ${dataBin.length}bytes to ${deviceId}`);
+    logger(`transferring data ${dataBin.length}bytes to ${socket.id}`);
     socket.emit(TRANSFER_DATA_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [DATA_PARAM]: dataBin,

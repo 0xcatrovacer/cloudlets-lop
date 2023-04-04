@@ -10,6 +10,8 @@ import {
     DATA_FORMAT_PARAM,
     DATA_PARAM,
     DEVICE_ID_PARAM,
+    STORAGE_MSG,
+    TRANSFER_DATA_MSG,
 } from '../coms/constants.js';
 import {
     getNodeStatInformation,
@@ -27,7 +29,9 @@ import { logger } from '../logger/index.js';
 const serverSetup = (io, reverseConnectClient) => {
     logger('setup server - initiated');
     io.on('connection', socket => {
-        console.log('listening to new node on socket', socket.id);
+        console.log(
+            `${DEVICE_ID} listening to new nodes on socket ${socket.id}`
+        );
 
         // send device ID
         socket.emit('hello', { [DEVICE_ID_PARAM]: DEVICE_ID });
@@ -40,7 +44,12 @@ const serverSetup = (io, reverseConnectClient) => {
             }) => {
                 addClientConnection(deviceId, socket);
                 setNodeInformation(deviceId, APPLICATIONS_STATE, apps);
-                !getServerConnection(deviceId) && reverseConnectClient(address);
+                if (getServerConnection(deviceId))
+                    logger('established duplex connection with ', deviceId);
+                else {
+                    logger(`reverse connecting to ${deviceId}`);
+                    reverseConnectClient(address);
+                }
             }
         );
 
@@ -52,11 +61,12 @@ const serverSetup = (io, reverseConnectClient) => {
                 [DATA_FORMAT_PARAM]: dataFormat,
                 [DEVICE_ID_PARAM]: deviceId,
             }) => {
+                logger('recieved transferred data --');
                 if (
                     getNodeStatInformation(DEVICE_ID, STORAGE_STATE) ===
                     HIG_STATE
                 )
-                    transferData(data, dataFormat);
+                    transferData(data, dataFormat, 'subscriber');
                 else receiveData(data, dataFormat, deviceId);
             }
         );

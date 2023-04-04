@@ -19,16 +19,20 @@ const transferTaskToCloud = task => {
 };
 
 const receiveData = (data, format, deviecId) => {
-    logger(`receive data ${data.length}bytes from ${deviecId}`);
+    logger(`receive ${format} data ${data.length}bytes from ${deviecId}`);
 };
 
 const transferData = (
     data = TRANSFER_DUMMY_DATA,
-    format = TRANSFER_FORMAT_STRING
+    format = TRANSFER_FORMAT_STRING,
+    source = 'default'
 ) => {
+    logger('transfer data -- init -- source=' + source);
+
     const connections = getAllConnections();
     let low = [],
         med = [];
+
     connections.forEach(connection => {
         if (connection?.stats[STORAGE_STATE] === LOW_STATE)
             low.push(connection);

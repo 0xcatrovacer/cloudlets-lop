@@ -1,3 +1,4 @@
+import { logger } from '../logger/index.js';
 import {
     STORAGE_MSG,
     CPU_MSG,
@@ -18,9 +19,11 @@ const cpuUpdateSub = (socket, ...callbacks) => {
 };
 
 const transferDataSub = (socket, ...callbacks) => {
-    socket.on(TRANSFER_DATA_MSG, data =>
-        callbacks.forEach(callback => callback(data))
-    );
+    console.log('data subscribers: ', callbacks);
+    socket.on(TRANSFER_DATA_MSG, data => {
+        logger('at transferDataSub -- 1');
+        callbacks.forEach(callback => callback(data));
+    });
 };
 
 const transferTaskSub = (socket, ...callbacks) => {
