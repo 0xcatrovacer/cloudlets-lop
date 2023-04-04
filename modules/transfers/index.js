@@ -95,15 +95,15 @@ const transferTask = (
 
     if (LL.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            LL[Math.floor(Math.random() * LL.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
     } else if (LH.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            LH[Math.floor(Math.random() * LH.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
     } else if (HL.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            HL[Math.floor(Math.random() * HL.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
     } else {
         transferTaskToCloud(task);
