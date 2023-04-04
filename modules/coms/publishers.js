@@ -1,3 +1,4 @@
+import { getDeviceIdFromSocketId } from '../connections-manager/index.js';
 import { logger } from '../logger/index.js';
 import {
     STORAGE_MSG,
@@ -15,7 +16,7 @@ import {
 } from './constants.js';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
-    logger('sending storage state update: ', storageState);
+    // logger('sending storage state update: ', storageState);
     socket.emit(STORAGE_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [STATE_PARAM]: storageState,
@@ -23,6 +24,7 @@ const storageUpdatePub = (socket, deviceId, storageState) => {
 };
 
 const cpuUpdatePub = (socket, deviceId, cpuState) => {
+    // logger('sending cpu state update: ', cpuState);
     socket.emit(CPU_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [STATE_PARAM]: cpuState,
@@ -37,7 +39,11 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
 };
 
 const transferDataPub = (socket, deviceId, dataBin, format) => {
-    logger(`transferring data ${dataBin.length}bytes to ${socket.id}`);
+    logger(
+        `transferring data ${dataBin.length}bytes to ${getDeviceIdFromSocketId(
+            socket.id
+        )}`
+    );
     socket.emit(TRANSFER_DATA_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [DATA_PARAM]: dataBin,
@@ -46,6 +52,12 @@ const transferDataPub = (socket, deviceId, dataBin, format) => {
 };
 
 const transferTaskPub = (socket, deviceId, taskObject) => {
+    logger(
+        `transferring task ${taskObject} to ${getDeviceIdFromSocketId(
+            socket.id
+        )}`
+    );
+
     socket.emit(TRANSFER_TASK_MSG, {
         [DEVICE_ID_PARAM]: deviceId,
         [TASK_PARAM]: taskObject,

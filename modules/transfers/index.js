@@ -11,7 +11,7 @@ import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
 import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants.js';
 
 const transferDataToCloud = data => {
-    console.log(`data transfered to cloud: bytes[${data}]`);
+    // console.log(`data transfered to cloud: bytes[${data}]`);
 };
 
 const transferTaskToCloud = task => {
@@ -68,8 +68,12 @@ const transferTask = (
         id: 10101,
         name: 'dummyname',
         swList: [1],
+        source: 'end-device',
     }
 ) => {
+    logger('transfer task -- init -- source=' + task.source);
+
+    task.source = DEVICE_ID;
     const connections = getAllConnections();
     let LL = [],
         LX = [],

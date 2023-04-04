@@ -15,13 +15,14 @@ const getRequest = () => {
         id: getRandomInteger(1000, 10000),
         name: 'dummyname',
         swList: check,
+        source: 'end-device',
     };
     return task;
 };
 
 const taskSimulator = (timeInterval, callback) => {
     setInterval(() => {
-        Boolean(getRandomInteger(1, 10) % 2) && callback(getRequest());
+        callback(getRequest());
     }, timeInterval);
 };
 

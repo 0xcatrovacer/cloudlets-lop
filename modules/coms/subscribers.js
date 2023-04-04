@@ -19,10 +19,15 @@ const cpuUpdateSub = (socket, ...callbacks) => {
 };
 
 const transferDataSub = (socket, ...callbacks) => {
-    console.log('data subscribers: ', callbacks);
+    logger(
+        `Socket ${{ socket }} subscribing to data with subscriber: ${callbacks}`
+    );
     socket.on(TRANSFER_DATA_MSG, data => {
-        logger('at transferDataSub -- 1');
-        callbacks.forEach(callback => callback(data));
+        logger('transferData subscriber: received data: ', data);
+        callbacks.forEach(callback => {
+            logger('transferData subscriber: calling method: ', callback);
+            callback(data);
+        });
     });
 };
 

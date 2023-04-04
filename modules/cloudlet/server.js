@@ -61,7 +61,7 @@ const serverSetup = (io, reverseConnectClient) => {
                 [DATA_FORMAT_PARAM]: dataFormat,
                 [DEVICE_ID_PARAM]: deviceId,
             }) => {
-                logger('recieved transferred data --');
+                logger(`recieved transferred data -- ${deviceId}`);
                 if (
                     getNodeStatInformation(DEVICE_ID, STORAGE_STATE) ===
                     HIG_STATE
@@ -73,6 +73,7 @@ const serverSetup = (io, reverseConnectClient) => {
 
         transferTaskSub(socket, taskReciever);
     });
+
     logger('setup server - done');
 };
 export { serverSetup };
