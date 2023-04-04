@@ -72,8 +72,8 @@ const transferTask = (
 ) => {
     const connections = getAllConnections();
     let LL = [],
-        LH = [],
-        HL = [];
+        LX = [],
+        XL = [];
 
     connections.forEach(connection => {
         if (
@@ -83,27 +83,27 @@ const transferTask = (
             LL.push(connection);
         else if (
             connection?.stats[STORAGE_STATE] === LOW_STATE &&
-            connection?.stats[CPU_STATE] === HIG_STATE
+            connection?.stats[CPU_STATE] !== HIG_STATE
         )
-            LH.push(connection);
+            LX.push(connection);
         else if (
-            connection?.stats[STORAGE_STATE] === HIG_STATE &&
+            connection?.stats[STORAGE_STATE] !== HIG_STATE &&
             connection?.stats[CPU_STATE] === LOW_STATE
         )
-            HL.push(connection);
+            XL.push(connection);
     });
 
     if (LL.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            LL[Math.floor(Math.random() * LL.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
-    } else if (LH.length > 0) {
+    } else if (LX.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            LX[Math.floor(Math.random() * LX.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
-    } else if (HL.length > 0) {
+    } else if (XL.length > 0) {
         const randomDevice =
-            low[Math.floor(Math.random() * low.length)][DEVICE_ID_PARAM];
+            XL[Math.floor(Math.random() * XL.length)][DEVICE_ID_PARAM];
         transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
     } else {
         transferTaskToCloud(task);
