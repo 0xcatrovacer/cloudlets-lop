@@ -20,3 +20,12 @@ setupCloudlet();
 
 // Start listening to devices
 listenEndDevices();
+
+const runningTime = parseInt(process.env.TEST_RUNTIME);
+
+if (runningTime !== 0) {
+    setTimeout(() => {
+        console.log(global.stats);
+        process.exit(0);
+    }, runningTime * 1000);
+}
