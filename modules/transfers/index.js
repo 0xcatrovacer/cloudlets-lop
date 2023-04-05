@@ -40,9 +40,9 @@ const transferData = (
         med = [];
 
     connections.forEach(connection => {
-        if (connection?.stats[STORAGE_STATE] === LOW_STATE)
+        if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)
             low.push(connection);
-        else if (connection?.stats[STORAGE_STATE] === MID_STATE)
+        else if (connection?.stats?.[STORAGE_STATE] === MID_STATE)
             med.push(connection);
     });
 
