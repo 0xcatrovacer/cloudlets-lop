@@ -39,6 +39,8 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
 };
 
 const transferDataPub = (socket, deviceId, dataBin, format) => {
+    if (!socket) return;
+
     logger(
         `transferring data ${dataBin.length}bytes to ${getDeviceIdFromSocketId(
             socket.id
@@ -54,6 +56,8 @@ const transferDataPub = (socket, deviceId, dataBin, format) => {
 };
 
 const transferTaskPub = (socket, deviceId, taskObject) => {
+    if (!socket) return;
+
     logger(
         `transferring task ${taskObject} to ${getDeviceIdFromSocketId(
             socket.id
