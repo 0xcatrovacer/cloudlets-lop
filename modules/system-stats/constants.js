@@ -1,22 +1,35 @@
-export const THRESHOLD0_BANDWIDTH = 0.4; //Lower threshold for bandwidth
-export const THRESHOLD1_BANDWIDTH = 0.8; //Upper threshold for bandwidth
+const {
+    THRESHOLD0_BANDWIDTH,
+    THRESHOLD1_BANDWIDTH,
+    TOTAL_BANDWIDTH,
+    ADAPTER,
+    THRESHOLD0_DISK,
+    THRESHOLD1_DISK,
+    THRESHOLD0_CPU,
+    THRESHOLD1_CPU,
+    N_AFFINITY_WEIGHT1,
+    N_AFFINITY_WEIGHT2,
+    N_AFFINITY_WEIGHT3,
+    TIME_INTERVAL,
+} = process.env;
 
-export const TOTAL_BANDWIDTH = process.env.TOTAL_BANDWIDTH; // The Bandwidth capacity
-export const ADAPTER = process.env.ADAPTER;
-
-export const THRESHOLD0_DISK = 0.4; //Lower threshold for memory
-export const THRESHOLD1_DISK = 0.9; //Upper threshold for memory
-
-export const THRESHOLD0_CPU = 0.4; //Lower threshold for CPU
-export const THRESHOLD1_CPU = 0.9; //Upper threshold for CPU
-
-export const AFFINITY_THRESHOLD = parseFloat(process.env.N_AFFINITY_TH); //Threshold for N
-export const N_AFFINITY_WEIGHT1 = 0.8; //Weights for CPU Affinity Calculation
-export const N_AFFINITY_WEIGHT2 = 0.1;
-export const N_AFFINITY_WEIGHT3 = 0.1;
+export {
+    THRESHOLD0_BANDWIDTH,
+    THRESHOLD1_BANDWIDTH,
+    TOTAL_BANDWIDTH,
+    ADAPTER,
+    THRESHOLD0_DISK,
+    THRESHOLD1_DISK,
+    THRESHOLD0_CPU,
+    THRESHOLD1_CPU,
+    N_AFFINITY_WEIGHT1,
+    N_AFFINITY_WEIGHT2,
+    N_AFFINITY_WEIGHT3,
+    TIME_INTERVAL,
+};
 
 export const LOW_STATE = 'LOW';
 export const MID_STATE = 'MID';
 export const HIG_STATE = 'HIG';
 
-export const TIME_INTERVAL = process.env.STAT_POLL_INTERVAL;
+export const AFFINITY_THRESHOLD = parseFloat(process.env.N_AFFINITY_TH);
