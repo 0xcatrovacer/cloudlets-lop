@@ -13,16 +13,16 @@ const listenEndDevices = () => {
 };
 
 const taskReciever = ({ [TASK_PARAM]: task }) => {
-    logger(`received task from ${task.source}: task: ${task}`);
+    console.log('received task from ' + task.source + 'task: ', task);
     // Validate task
     if (checkTaskRunnable(task)) {
-        logger(
+        console.log(
             `received task from ${task.source}: validation success: running`
         );
         return;
     }
     // If not runnable transfer task
-    logger(`received task from ${task.source}: validation failed`);
+    console.log(`received task from ${task.source}: validation failed`);
     transferTask(task);
 };
 
