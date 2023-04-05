@@ -49,6 +49,8 @@ const transferDataPub = (socket, deviceId, dataBin, format) => {
         [DATA_PARAM]: dataBin,
         [DATA_FORMAT_PARAM]: format,
     });
+
+    global.stats.dataTx++;
 };
 
 const transferTaskPub = (socket, deviceId, taskObject) => {
@@ -62,6 +64,8 @@ const transferTaskPub = (socket, deviceId, taskObject) => {
         [DEVICE_ID_PARAM]: deviceId,
         [TASK_PARAM]: taskObject,
     });
+
+    global.stats.taskTx++;
 };
 
 const applicationsAvailablePub = (

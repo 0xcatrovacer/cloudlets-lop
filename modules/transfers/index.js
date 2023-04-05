@@ -8,14 +8,20 @@ import {
 import { CPU_STATE, STORAGE_STATE } from '../information-manager/constants.js';
 import { logger } from '../logger/index.js';
 import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
-import { TRANSFER_DUMMY_DATA, TRANSFER_FORMAT_STRING } from './constants.js';
+import {
+    TASK_HOPS_THRESHOLD,
+    TRANSFER_DUMMY_DATA,
+    TRANSFER_FORMAT_STRING,
+} from './constants.js';
 
 const transferDataToCloud = data => {
-    // console.log(`data transfered to cloud: bytes[${data}]`);
+    console.log(`data transfered to cloud: bytes[${data.length}]`);
+    global.stats.dataCloudTx++;
 };
 
 const transferTaskToCloud = task => {
     console.log('task transfered to cloud', task);
+    global.stats.taskCloudTx++;
 };
 
 const receiveData = (data, format, deviecId) => {
@@ -69,9 +75,16 @@ const transferTask = (
         name: 'dummyname',
         swList: [1],
         source: 'end-device',
+        hops: 0,
     }
 ) => {
     logger('transfer task -- init -- source=' + task.source);
+    task.hops++;
+
+    if (task.hops >= TASK_HOPS_THRESHOLD) {
+        transferTaskToCloud(task);
+        return;
+    }
 
     task.source = DEVICE_ID;
     const connections = getAllConnections();

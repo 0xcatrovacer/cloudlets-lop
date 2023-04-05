@@ -16,6 +16,7 @@ const getRequest = () => {
         name: 'dummyname',
         swList: check,
         source: 'end-device',
+        hops: 0, // number of times task has hopped from one cloudlet to another
     };
     return task;
 };

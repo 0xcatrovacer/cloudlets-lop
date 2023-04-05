@@ -8,6 +8,15 @@ import { listenEndDevices } from './modules/tasks/index.js';
 // establish global variables
 global.connections = {};
 global.server = {};
+global.stats = {
+    dataTx: 0,
+    dataRx: 0,
+    dataCloudTx: 0,
+    taskTx: 0,
+    taskRx: 0,
+    taskCx: 0, // task consumed instantly
+    taskCloudTx: 0,
+};
 
 // load available applications data
 initApplicationsList();
@@ -19,7 +28,7 @@ initialiseSystemMonitor();
 setupCloudlet();
 
 // Start listening to devices
-listenEndDevices();
+// listenEndDevices();
 
 const runningTime = parseInt(process.env.TEST_RUNTIME);
 

@@ -26,15 +26,17 @@ const transferDataSub = (socket, ...callbacks) => {
         logger('transferData subscriber: received data: ', data);
         callbacks.forEach(callback => {
             logger('transferData subscriber: calling method: ', callback);
+            global.stats.dataRx++;
             callback(data);
         });
     });
 };
 
 const transferTaskSub = (socket, ...callbacks) => {
-    socket.on(TRANSFER_TASK_MSG, data =>
-        callbacks.forEach(callback => callback(data))
-    );
+    socket.on(TRANSFER_TASK_MSG, data => {
+        callbacks.forEach(callback => callback(data));
+        global.stats.taskRx++;
+    });
 };
 
 const transferTaskBroadcastSub = (socket, ...callbacks) => {
