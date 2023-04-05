@@ -10,7 +10,7 @@ export const THRESHOLD1_DISK = 0.9; //Upper threshold for memory
 export const THRESHOLD0_CPU = 0.4; //Lower threshold for CPU
 export const THRESHOLD1_CPU = 0.9; //Upper threshold for CPU
 
-export const AFFINITY_THRESHOLD = 1.5; //Threshold for N
+export const AFFINITY_THRESHOLD = parseFloat(process.env.N_AFFINITY_TH); //Threshold for N
 export const N_AFFINITY_WEIGHT1 = 0.8; //Weights for CPU Affinity Calculation
 export const N_AFFINITY_WEIGHT2 = 0.1;
 export const N_AFFINITY_WEIGHT3 = 0.1;
