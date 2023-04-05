@@ -2,16 +2,23 @@ import { io } from 'socket.io-client';
 import {
     ADDRESS_PARAM,
     AVAILABLE_APPLICATIONS_PARAM,
+    DATA_FORMAT_PARAM,
+    DATA_PARAM,
     DEVICE_ID_PARAM,
 } from '../coms/constants.js';
 import {
     cpuUpdateSub,
     storageUpdateSub,
     transferDataSub,
+    transferTaskSub,
 } from '../coms/subscribers.js';
 import { addServerConnection } from '../connections-manager/index.js';
-import { ALL_APPLICATIONS_LIST } from '../information-manager/constants.js';
 import {
+    ALL_APPLICATIONS_LIST,
+    STORAGE_STATE,
+} from '../information-manager/constants.js';
+import {
+    getNodeStatInformation,
     handleReceiveCpuUpdate,
     handleReceiveStorageUpdate,
 } from '../information-manager/index.js';
@@ -22,6 +29,9 @@ import {
     SERVER_PORT,
     SERVER_PROTOCOL,
 } from './constants.js';
+import { taskReciever } from '../tasks/index.js';
+import { HIG_STATE } from '../system-stats/constants.js';
+import { receiveData, transferData } from '../transfers/index.js';
 
 const clientSetup = serverAddr => {
     logger('setup client - initiated', `server addr: ${serverAddr}`);
@@ -48,6 +58,23 @@ const clientSetup = serverAddr => {
     // subscribe to update events
     storageUpdateSub(socket, handleReceiveStorageUpdate);
     cpuUpdateSub(socket, handleReceiveCpuUpdate);
+
+    // subscribe to transfer events
+    transferDataSub(
+        socket,
+        ({
+            [DATA_PARAM]: data,
+            [DATA_FORMAT_PARAM]: dataFormat,
+            [DEVICE_ID_PARAM]: deviceId,
+        }) => {
+            logger(`recieved transferred data -- ${deviceId}`);
+            if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
+                transferData(data, dataFormat, 'subscriber');
+            else receiveData(data, dataFormat, deviceId);
+        }
+    );
+
+    transferTaskSub(socket, taskReciever);
 
     logger('setup client - done');
 };

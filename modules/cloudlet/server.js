@@ -52,27 +52,24 @@ const serverSetup = (io, reverseConnectClient) => {
                 }
             }
         );
-
-        // subscribe to transfer events
-        transferDataSub(
-            socket,
-            ({
-                [DATA_PARAM]: data,
-                [DATA_FORMAT_PARAM]: dataFormat,
-                [DEVICE_ID_PARAM]: deviceId,
-            }) => {
-                logger(`recieved transferred data -- ${deviceId}`);
-                if (
-                    getNodeStatInformation(DEVICE_ID, STORAGE_STATE) ===
-                    HIG_STATE
-                )
-                    transferData(data, dataFormat, 'subscriber');
-                else receiveData(data, dataFormat, deviceId);
-            }
-        );
-
-        transferTaskSub(socket, taskReciever);
     });
+
+    // // subscribe to transfer events
+    // transferDataSub(
+    //     io,
+    //     ({
+    //         [DATA_PARAM]: data,
+    //         [DATA_FORMAT_PARAM]: dataFormat,
+    //         [DEVICE_ID_PARAM]: deviceId,
+    //     }) => {
+    //         logger(`recieved transferred data -- ${deviceId}`);
+    //         if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
+    //             transferData(data, dataFormat, 'subscriber');
+    //         else receiveData(data, dataFormat, deviceId);
+    //     }
+    // );
+
+    // transferTaskSub(io, taskReciever);
 
     logger('setup server - done');
 };
