@@ -11,6 +11,7 @@ const {
     N_AFFINITY_WEIGHT2,
     N_AFFINITY_WEIGHT3,
     TIME_INTERVAL,
+    TOTAL_DISK_SPACE,
 } = process.env;
 
 export {
@@ -26,6 +27,7 @@ export {
     N_AFFINITY_WEIGHT2,
     N_AFFINITY_WEIGHT3,
     TIME_INTERVAL,
+    TOTAL_DISK_SPACE,
 };
 
 export const LOW_STATE = 'LOW';
