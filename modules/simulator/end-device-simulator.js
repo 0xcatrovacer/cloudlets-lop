@@ -1,3 +1,5 @@
+import { DATA_EXPIRY_PARAM } from '../coms/constants';
+
 function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -27,7 +29,7 @@ const dataRequest = () => {
         format: 'string',
         deviceId: 'end-device',
         dataSize: 50,
-        expiry: Date.now() + parseInt(process.env.DATA_EXPIRY),
+        [DATA_EXPIRY_PARAM]: Date.now() + parseInt(process.env.DATA_EXPIRY),
     };
     return data;
 };

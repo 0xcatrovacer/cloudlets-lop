@@ -1,8 +1,10 @@
+import { DATA_EXPIRY_PARAM } from '../coms/constants';
+
 const expireData = () => {
     const preSize = global.dataQueue.length;
 
     global.dataQueue = global.dataQueue.filter(
-        data => data.expiry > Date.now()
+        data => data[DATA_EXPIRY_PARAM] > Date.now()
     );
 
     const postSize = global.dataQueue.length;
