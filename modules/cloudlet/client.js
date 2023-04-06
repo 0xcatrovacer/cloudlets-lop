@@ -4,6 +4,7 @@ import {
     AVAILABLE_APPLICATIONS_PARAM,
     DATA_FORMAT_PARAM,
     DATA_PARAM,
+    DATA_SIZE_PARAM,
     DEVICE_ID_PARAM,
 } from '../coms/constants.js';
 import {
@@ -66,11 +67,12 @@ const clientSetup = serverAddr => {
             [DATA_PARAM]: data,
             [DATA_FORMAT_PARAM]: dataFormat,
             [DEVICE_ID_PARAM]: deviceId,
+            [DATA_SIZE_PARAM]: dataSize
         }) => {
             logger(`recieved transferred data -- ${deviceId}`);
             if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
-                transferData(data, dataFormat, 'subscriber');
-            else receiveData(data, dataFormat, deviceId);
+                transferData(data, dataFormat, 'subscriber', dataSize);
+            else receiveData(data, dataFormat, deviceId, dataSize);
         }
     );
 

@@ -14,7 +14,7 @@ import { checkTaskRunnable } from './validators.js';
 const listenEndDevices = () => {
     // taskSimulator(TIME_INTERVAL, task => taskReciever({ [TASK_PARAM]: task }));
     dataSimulator(TIME_INTERVAL, data =>
-        receiveData(data.data, data.format, data.deviceId)
+        receiveData(data.data, data.format, data.deviceId, data.dataSize)
     );
 };
 

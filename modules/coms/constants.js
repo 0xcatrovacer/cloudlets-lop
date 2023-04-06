@@ -11,5 +11,6 @@ export const ADDRESS_PARAM = 'address';
 export const STATE_PARAM = 'state';
 export const DATA_PARAM = 'data';
 export const DATA_FORMAT_PARAM = 'format';
+export const DATA_SIZE_PARAM = 'data_size';
 export const TASK_PARAM = 'task';
 export const AVAILABLE_APPLICATIONS_PARAM = 'available_applications';

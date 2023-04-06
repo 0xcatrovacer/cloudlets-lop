@@ -11,11 +11,12 @@ import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
 import {
     TASK_HOPS_THRESHOLD,
     TRANSFER_DUMMY_DATA,
+    TRANSFER_DUMMY_SIZE,
     TRANSFER_FORMAT_STRING,
 } from './constants.js';
 
 const transferDataToCloud = data => {
-    console.log(`data transfered to cloud: bytes[${data.length}]`);
+    console.log(`data transfered to cloud: ${data}`);
     global.stats.dataCloudTx++;
 };
 
@@ -24,14 +25,17 @@ const transferTaskToCloud = task => {
     global.stats.taskCloudTx++;
 };
 
-const receiveData = (data, format, deviecId) => {
-    logger(`receive ${format} data ${data.length}bytes from ${deviecId}`);
+const receiveData = (data, format, deviceId, dataSize) => {
+    logger(`receive ${format} data of size ${dataSize}Mb from ${deviceId}`);
+    global.stats.usedDiskSpace += dataSize;
+    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
 const transferData = (
     data = TRANSFER_DUMMY_DATA,
     format = TRANSFER_FORMAT_STRING,
-    source = 'default'
+    source = 'default',
+    dataSize = TRANSFER_DUMMY_SIZE
 ) => {
     logger('transfer data -- init -- source=' + source);
 
@@ -53,7 +57,8 @@ const transferData = (
             getClientConnection(randomDevice),
             DEVICE_ID,
             data,
-            format
+            format,
+            dataSize
         );
     } else if (med.length > 0) {
         const randomDevice =
@@ -62,11 +67,14 @@ const transferData = (
             getClientConnection(randomDevice),
             DEVICE_ID,
             data,
-            format
+            format,
+            dataSize
         );
     } else {
         transferDataToCloud(data);
     }
+    global.stats.usedDiskSpace -= dataSize;
+    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
 const transferTask = (

@@ -26,6 +26,7 @@ const dataRequest = () => {
         data: 'qwertyuiopasdfghjklzxcvbnm',
         format: 'string',
         deviceId: 'end-device',
+        dataSize: 50
     };
     return data;
 };
