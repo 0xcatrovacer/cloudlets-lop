@@ -1,4 +1,5 @@
-import { DATA_EXPIRY_PARAM } from '../coms/constants';
+import { DATA_EXPIRY_PARAM } from '../coms/constants.js';
+import { logger } from '../logger/index.js';
 
 const expireData = () => {
     const preSize = global.dataQueue.length;

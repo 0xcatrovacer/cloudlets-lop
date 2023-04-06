@@ -24,13 +24,18 @@ const getRequest = () => {
 };
 
 const dataRequest = () => {
+    const expiryAdjFactor =
+        Math.random() * 5000 * (Math.random() < 0.5 ? -1 : 1);
+
     const data = {
         data: 'qwertyuiopasdfghjklzxcvbnm',
         format: 'string',
         deviceId: 'end-device',
         dataSize: 50,
-        [DATA_EXPIRY_PARAM]: Date.now() + parseInt(process.env.DATA_EXPIRY),
+        [DATA_EXPIRY_PARAM]:
+            Date.now() + parseInt(process.env.DATA_EXPIRY) + expiryAdjFactor,
     };
+    console.log('Data to be expired on ', data[DATA_EXPIRY_PARAM]);
     return data;
 };
 

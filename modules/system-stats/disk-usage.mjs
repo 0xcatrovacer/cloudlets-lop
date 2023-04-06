@@ -1,3 +1,4 @@
+import { expireData } from '../crons/disk-cron.js';
 import { logger } from '../logger/index.js';
 import {
     HIG_STATE,
@@ -11,6 +12,7 @@ import {
 const monitorDiskUsage = (timeInterval, callback) => {
     logger('monitor disk usage -- init');
     setInterval(() => {
+        expireData();
         callback(getDiskStatus());
     }, timeInterval);
 };
