@@ -3,13 +3,19 @@
 
 import { TASK_PARAM } from '../coms/constants.js';
 import { logger } from '../logger/index.js';
-import { taskSimulator } from '../simulator/end-device-simulator.js';
-import { transferTask } from '../transfers/index.js';
+import {
+    dataSimulator,
+    taskSimulator,
+} from '../simulator/end-device-simulator.js';
+import { receiveData, transferTask } from '../transfers/index.js';
 import { TIME_INTERVAL } from './constants.js';
 import { checkTaskRunnable } from './validators.js';
 
 const listenEndDevices = () => {
-    taskSimulator(TIME_INTERVAL, task => taskReciever({ [TASK_PARAM]: task }));
+    // taskSimulator(TIME_INTERVAL, task => taskReciever({ [TASK_PARAM]: task }));
+    dataSimulator(TIME_INTERVAL, data =>
+        receiveData(data.data, data.format, data.deviceId)
+    );
 };
 
 const taskReciever = ({ [TASK_PARAM]: task }) => {

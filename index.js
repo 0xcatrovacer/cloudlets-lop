@@ -28,7 +28,7 @@ initialiseSystemMonitor();
 setupCloudlet();
 
 // Start listening to devices
-// listenEndDevices();
+listenEndDevices();
 
 const runningTime = parseInt(process.env.TEST_RUNTIME);
 
