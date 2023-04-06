@@ -21,10 +21,27 @@ const getRequest = () => {
     return task;
 };
 
+const dataRequest = () => {
+    const data = {
+        data: 'qwertyuiopasdfghjklzxcvbnm',
+        format: 'string',
+        deviceId: 'end-device',
+    };
+    return data;
+};
+
 const taskSimulator = (timeInterval, callback) => {
     setInterval(() => {
         callback(getRequest());
     }, timeInterval);
 };
 
-export { taskSimulator };
+const dataSimulator = (timeInterval, callback) => {
+    setInterval(() => {
+        if (Math.random() > 0.5) {
+            callback(dataRequest());
+        }
+    }, timeInterval);
+};
+
+export { taskSimulator, dataSimulator };
