@@ -16,6 +16,7 @@ const listenEndDevices = () => {
     dataSimulator(TIME_INTERVAL, data => {
         global.stats.usedDiskSpace += data.dataSize;
         logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+        global.dataQueue.push(data);
         receiveData(data.data, data.format, data.deviceId, data.dataSize);
     });
 };

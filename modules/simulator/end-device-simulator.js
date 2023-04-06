@@ -27,6 +27,7 @@ const dataRequest = () => {
         format: 'string',
         deviceId: 'end-device',
         dataSize: 50,
+        expiry: Date.now() + parseInt(process.env.DATA_EXPIRY),
     };
     return data;
 };

@@ -31,6 +31,8 @@ const transferDataSub = (socket, ...callbacks) => {
             global.stats.usedDiskSpace += data.data_size;
             logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 
+            global.dataQueue.push(data);
+
             callback(data);
         });
     });

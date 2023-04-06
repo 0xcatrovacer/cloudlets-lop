@@ -44,6 +44,10 @@ const transferData = (
     let low = [],
         med = [];
 
+    const { expiryTime } = global.dataQueue.at(-1);
+    global.dataQueue.pop();
+    data = { ...data, expiryTime };
+
     connections.forEach(connection => {
         if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)
             low.push(connection);
