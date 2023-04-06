@@ -1,4 +1,4 @@
-import { DATA_EXPIRY_PARAM } from '../coms/constants';
+import { DATA_EXPIRY_PARAM } from '../coms/constants.js';
 
 function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -9,6 +9,8 @@ const expireData = () => {
 
     const postSize = global.dataQueue.length;
 
+    logger(`${(preSize - postSize) * 50}Mb data deleted`);
+
     global.stats.usedDiskSpace -= (preSize - postSize) * 50; //TODO
 };
 
