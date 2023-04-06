@@ -14,6 +14,7 @@ import {
     AVAILABLE_APPLICATIONS_MSG,
     AVAILABLE_APPLICATIONS_PARAM,
     DATA_SIZE_PARAM,
+    DATA_EXPIRY_PARAM,
 } from './constants.js';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
@@ -39,7 +40,14 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
     });
 };
 
-const transferDataPub = (socket, deviceId, dataBin, format, dataSize) => {
+const transferDataPub = (
+    socket,
+    deviceId,
+    dataBin,
+    format,
+    dataSize,
+    expiryTime
+) => {
     if (!socket) return;
 
     logger(
@@ -52,6 +60,7 @@ const transferDataPub = (socket, deviceId, dataBin, format, dataSize) => {
         [DATA_PARAM]: dataBin,
         [DATA_FORMAT_PARAM]: format,
         [DATA_SIZE_PARAM]: dataSize,
+        [DATA_EXPIRY_PARAM]: expiryTime,
     });
 
     global.stats.usedDiskSpace -= dataSize;

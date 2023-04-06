@@ -46,7 +46,6 @@ const transferData = (
 
     const { expiryTime } = global.dataQueue.at(-1);
     global.dataQueue.pop();
-    data = { ...data, expiryTime };
 
     connections.forEach(connection => {
         if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)
@@ -63,7 +62,8 @@ const transferData = (
             DEVICE_ID,
             data,
             format,
-            dataSize
+            dataSize,
+            expiryTime
         );
     } else if (med.length > 0) {
         const randomDevice =
@@ -73,7 +73,8 @@ const transferData = (
             DEVICE_ID,
             data,
             format,
-            dataSize
+            dataSize,
+            expiryTime
         );
     } else {
         transferDataToCloud(data, dataSize);
