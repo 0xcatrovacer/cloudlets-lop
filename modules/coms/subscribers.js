@@ -27,6 +27,10 @@ const transferDataSub = (socket, ...callbacks) => {
         callbacks.forEach(callback => {
             logger('transferData subscriber: calling method: ', callback);
             global.stats.dataRx++;
+
+            global.stats.usedDiskSpace += data.data_size;
+            logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+
             callback(data);
         });
     });

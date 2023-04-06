@@ -26,7 +26,7 @@ const dataRequest = () => {
         data: 'qwertyuiopasdfghjklzxcvbnm',
         format: 'string',
         deviceId: 'end-device',
-        dataSize: 50
+        dataSize: 50,
     };
     return data;
 };
@@ -39,9 +39,8 @@ const taskSimulator = (timeInterval, callback) => {
 
 const dataSimulator = (timeInterval, callback) => {
     setInterval(() => {
-        if (Math.random() > 0.5) {
-            callback(dataRequest());
-        }
+        global.stats.dataRx++;
+        callback(dataRequest());
     }, timeInterval);
 };
 

@@ -54,6 +54,9 @@ const transferDataPub = (socket, deviceId, dataBin, format, dataSize) => {
         [DATA_SIZE_PARAM]: dataSize,
     });
 
+    global.stats.usedDiskSpace -= dataSize;
+    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+
     global.stats.dataTx++;
 };
 
