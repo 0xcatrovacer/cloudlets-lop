@@ -18,6 +18,7 @@ global.stats = {
     taskCx: 0, // task consumed instantly
     taskCloudTx: 0,
 };
+global.dataQueue = [];
 
 // load available applications data
 initApplicationsList();
