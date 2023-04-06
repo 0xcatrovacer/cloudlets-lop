@@ -9,7 +9,7 @@ import { listenEndDevices } from './modules/tasks/index.js';
 global.connections = {};
 global.server = {};
 global.stats = {
-    usedDiskSpace: 0,
+    usedDiskSpace: parseInt(process.env.INITIAL_DISC_SPACE),
     dataTx: 0,
     dataRx: 0,
     dataCloudTx: 0,

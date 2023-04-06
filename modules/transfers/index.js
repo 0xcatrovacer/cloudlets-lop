@@ -15,9 +15,12 @@ import {
     TRANSFER_FORMAT_STRING,
 } from './constants.js';
 
-const transferDataToCloud = data => {
+const transferDataToCloud = (data, dataSize) => {
     console.log(`data transfered to cloud: ${data}`);
     global.stats.dataCloudTx++;
+
+    global.stats.usedDiskSpace -= dataSize;
+    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
 const transferTaskToCloud = task => {
@@ -27,8 +30,6 @@ const transferTaskToCloud = task => {
 
 const receiveData = (data, format, deviceId, dataSize) => {
     logger(`receive ${format} data of size ${dataSize}Mb from ${deviceId}`);
-    global.stats.usedDiskSpace += dataSize;
-    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
 const transferData = (
@@ -71,10 +72,8 @@ const transferData = (
             dataSize
         );
     } else {
-        transferDataToCloud(data);
+        transferDataToCloud(data, dataSize);
     }
-    global.stats.usedDiskSpace -= dataSize;
-    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
 const transferTask = (
