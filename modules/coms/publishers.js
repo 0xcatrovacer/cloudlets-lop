@@ -13,6 +13,7 @@ import {
     BANDWIDTH_MSG,
     AVAILABLE_APPLICATIONS_MSG,
     AVAILABLE_APPLICATIONS_PARAM,
+    DATA_SIZE_PARAM,
 } from './constants.js';
 
 const storageUpdatePub = (socket, deviceId, storageState) => {
@@ -38,11 +39,11 @@ const bandwidthUpdatePub = (socket, deviceId, bandwidthState) => {
     });
 };
 
-const transferDataPub = (socket, deviceId, dataBin, format) => {
+const transferDataPub = (socket, deviceId, dataBin, format, dataSize) => {
     if (!socket) return;
 
     logger(
-        `transferring data ${dataBin.length}bytes to ${getDeviceIdFromSocketId(
+        `transferring data ${dataSize}Mb to ${getDeviceIdFromSocketId(
             socket.id
         )}`
     );
@@ -50,6 +51,7 @@ const transferDataPub = (socket, deviceId, dataBin, format) => {
         [DEVICE_ID_PARAM]: deviceId,
         [DATA_PARAM]: dataBin,
         [DATA_FORMAT_PARAM]: format,
+        [DATA_SIZE_PARAM]: dataSize,
     });
 
     global.stats.dataTx++;
