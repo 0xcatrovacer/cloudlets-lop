@@ -8,6 +8,7 @@ import {
 import { CPU_STATE, STORAGE_STATE } from '../information-manager/constants.js';
 import { logger } from '../logger/index.js';
 import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
+import { getExpiryTime } from '../utils/index.js';
 import {
     TASK_HOPS_THRESHOLD,
     TRANSFER_DUMMY_DATA,
@@ -44,8 +45,13 @@ const transferData = (
     let low = [],
         med = [];
 
-    const { expiryTime } = global.dataQueue.at(-1);
-    global.dataQueue.pop();
+    let expiryTime = 0;
+    if (global.dataQueue.length > 0) {
+        expiryTime = global.dataQueue.at(-1);
+        global.dataQueue.pop();
+    } else {
+        expiryTime = getExpiryTime();
+    }
 
     connections.forEach(connection => {
         if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)

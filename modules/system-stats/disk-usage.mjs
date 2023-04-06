@@ -21,11 +21,11 @@ const getDiskStatus = () => {
     const diskUsageRatio = calcDiskUsage();
 
     //to return Disk Usage Status - 'HIG'/'MID'/'LOW'
-    if (diskUsageRatio <= THRESHOLD0_DISK) {
+    if (diskUsageRatio < THRESHOLD0_DISK) {
         return LOW_STATE;
     } else if (
-        THRESHOLD0_DISK < diskUsageRatio &&
-        diskUsageRatio <= THRESHOLD1_DISK
+        THRESHOLD0_DISK <= diskUsageRatio &&
+        diskUsageRatio < THRESHOLD1_DISK
     ) {
         return MID_STATE;
     } else {
