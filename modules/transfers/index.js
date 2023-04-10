@@ -1,5 +1,5 @@
 import { DEVICE_ID } from '../cloudlet/constants.js';
-import { DEVICE_ID_PARAM } from '../coms/constants.js';
+import { DATA_SIZE_PARAM, DEVICE_ID_PARAM } from '../coms/constants.js';
 import { transferDataPub, transferTaskPub } from '../coms/publishers.js';
 import {
     getAllConnections,
