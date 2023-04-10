@@ -62,8 +62,6 @@ const transferData = (
     let low = [],
         med = [];
 
-    let expiryTime = data[DATA_EXPIRY_PARAM];
-
     connections.forEach(connection => {
         if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)
             low.push(connection);

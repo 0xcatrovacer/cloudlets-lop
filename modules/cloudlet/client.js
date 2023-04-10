@@ -2,6 +2,7 @@ import { io } from 'socket.io-client';
 import {
     ADDRESS_PARAM,
     AVAILABLE_APPLICATIONS_PARAM,
+    DATA_EXPIRY_PARAM,
     DATA_FORMAT_PARAM,
     DATA_PARAM,
     DATA_SIZE_PARAM,
@@ -68,7 +69,8 @@ const clientSetup = serverAddr => {
                 data[DATA_PARAM],
                 data[DATA_FORMAT_PARAM],
                 'subscriber',
-                data[DATA_SIZE_PARAM]
+                data[DATA_SIZE_PARAM],
+                data[DATA_EXPIRY_PARAM]
             );
         else receiveData(data);
     });
