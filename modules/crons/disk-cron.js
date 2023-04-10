@@ -1,5 +1,6 @@
 import { DATA_EXPIRY_PARAM } from '../coms/constants.js';
 import { logger } from '../logger/index.js';
+import { DATA_PACKET_SIZE } from '../system-stats/constants.js';
 
 const expireData = () => {
     const preSize = global.dataQueue.length;
@@ -10,9 +11,9 @@ const expireData = () => {
 
     const postSize = global.dataQueue.length;
 
-    logger(`${(preSize - postSize) * 50}Mb data deleted`);
+    logger(`${(preSize - postSize) * DATA_PACKET_SIZE}Mb data deleted`);
 
-    global.stats.usedDiskSpace -= (preSize - postSize) * 50; //TODO
+    global.stats.usedDiskSpace -= (preSize - postSize) * DATA_PACKET_SIZE; //TODO
 };
 
 export { expireData };

@@ -1,7 +1,7 @@
 // this file is supposed to receive tasks from the end device purposes we are
 // using end device simulator in simulator module
 
-import { TASK_PARAM } from '../coms/constants.js';
+import { DATA_SIZE_PARAM, TASK_PARAM } from '../coms/constants.js';
 import { logger } from '../logger/index.js';
 import {
     dataSimulator,
@@ -14,10 +14,12 @@ import { checkTaskRunnable } from './validators.js';
 const listenEndDevices = () => {
     // taskSimulator(TIME_INTERVAL, task => taskReciever({ [TASK_PARAM]: task }));
     dataSimulator(TIME_INTERVAL, data => {
-        global.stats.usedDiskSpace += data.dataSize;
-        logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
-        global.dataQueue.push(data);
-        receiveData(data.data, data.format, data.deviceId, data.dataSize);
+        receiveData(
+            data.data,
+            data.format,
+            data.deviceId,
+            data[DATA_SIZE_PARAM]
+        );
     });
 };
 

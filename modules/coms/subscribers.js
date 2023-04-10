@@ -6,6 +6,7 @@ import {
     TRANSFER_TASK_MSG,
     TRANSFER_TASK_BROADCAST_MSG,
     AVAILABLE_APPLICATIONS_MSG,
+    DATA_SIZE_PARAM,
 } from './constants.js';
 
 const storageUpdateSub = (socket, ...callbacks) => {
@@ -24,15 +25,14 @@ const transferDataSub = (socket, ...callbacks) => {
     );
     socket.on(TRANSFER_DATA_MSG, data => {
         logger('transferData subscriber: received data: ', data);
+
+        global.stats.dataRx++;
+        global.stats.usedDiskSpace += dataSize;
+        logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+        global.dataQueue.push(data);
+
         callbacks.forEach(callback => {
             logger('transferData subscriber: calling method: ', callback);
-            global.stats.dataRx++;
-
-            global.stats.usedDiskSpace += data.data_size;
-            logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
-
-            global.dataQueue.push(data);
-
             callback(data);
         });
     });

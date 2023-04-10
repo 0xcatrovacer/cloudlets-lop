@@ -67,7 +67,7 @@ const clientSetup = serverAddr => {
             [DATA_PARAM]: data,
             [DATA_FORMAT_PARAM]: dataFormat,
             [DEVICE_ID_PARAM]: deviceId,
-            [DATA_SIZE_PARAM]: dataSize
+            [DATA_SIZE_PARAM]: dataSize,
         }) => {
             logger(`recieved transferred data -- ${deviceId}`);
             if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)

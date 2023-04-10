@@ -7,7 +7,12 @@ import {
 } from '../connections-manager/index.js';
 import { CPU_STATE, STORAGE_STATE } from '../information-manager/constants.js';
 import { logger } from '../logger/index.js';
-import { HIG_STATE, LOW_STATE, MID_STATE } from '../system-stats/constants.js';
+import {
+    DATA_PACKET_SIZE,
+    HIG_STATE,
+    LOW_STATE,
+    MID_STATE,
+} from '../system-stats/constants.js';
 import { getExpiryTime } from '../utils/index.js';
 import {
     TASK_HOPS_THRESHOLD,
@@ -30,6 +35,10 @@ const transferTaskToCloud = task => {
 };
 
 const receiveData = (data, format, deviceId, dataSize) => {
+    global.stats.usedDiskSpace += data[DATA_SIZE_PARAM];
+    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+    global.dataQueue.push(data);
+
     logger(`receive ${format} data of size ${dataSize}Mb from ${deviceId}`);
 };
 
@@ -37,7 +46,7 @@ const transferData = (
     data = TRANSFER_DUMMY_DATA,
     format = TRANSFER_FORMAT_STRING,
     source = 'default',
-    dataSize = TRANSFER_DUMMY_SIZE
+    dataSize = DATA_PACKET_SIZE
 ) => {
     logger('transfer data -- init -- source=' + source);
 
@@ -47,7 +56,7 @@ const transferData = (
 
     let expiryTime = 0;
     if (global.dataQueue.length > 0) {
-        expiryTime = global.dataQueue.at(-1);
+        expiryTime = global.dataQueue.at(-1).expiryTime;
         global.dataQueue.pop();
     } else {
         expiryTime = getExpiryTime();

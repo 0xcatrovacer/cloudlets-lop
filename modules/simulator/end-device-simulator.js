@@ -1,4 +1,5 @@
-import { DATA_EXPIRY_PARAM } from '../coms/constants.js';
+import { DATA_EXPIRY_PARAM, DATA_SIZE_PARAM } from '../coms/constants.js';
+import { DATA_PACKET_SIZE } from '../system-stats/constants.js';
 import { getExpiryTime } from '../utils/index.js';
 
 function getRandomInteger(min, max) {
@@ -29,7 +30,7 @@ const dataRequest = () => {
         data: 'qwertyuiopasdfghjklzxcvbnm',
         format: 'string',
         deviceId: 'end-device',
-        dataSize: 50,
+        [DATA_SIZE_PARAM]: DATA_PACKET_SIZE,
         [DATA_EXPIRY_PARAM]: getExpiryTime(),
     };
     console.log('Data to be expired on ', data[DATA_EXPIRY_PARAM]);

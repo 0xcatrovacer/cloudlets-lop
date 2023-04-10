@@ -30,6 +30,8 @@ export {
     TOTAL_DISK_SPACE,
 };
 
+export const DATA_PACKET_SIZE = parseInt(process.env.DATA_PACKET_SIZE);
+
 export const LOW_STATE = 'LOW';
 export const MID_STATE = 'MID';
 export const HIG_STATE = 'HIG';
