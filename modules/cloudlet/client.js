@@ -61,20 +61,17 @@ const clientSetup = serverAddr => {
     cpuUpdateSub(socket, handleReceiveCpuUpdate);
 
     // subscribe to transfer events
-    transferDataSub(
-        socket,
-        ({
-            [DATA_PARAM]: data,
-            [DATA_FORMAT_PARAM]: dataFormat,
-            [DEVICE_ID_PARAM]: deviceId,
-            [DATA_SIZE_PARAM]: dataSize,
-        }) => {
-            logger(`recieved transferred data -- ${deviceId}`);
-            if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
-                transferData(data, dataFormat, 'subscriber', dataSize);
-            else receiveData(data, dataFormat, deviceId, dataSize);
-        }
-    );
+    transferDataSub(socket, data => {
+        logger(`recieved transferred data -- ${deviceId}`);
+        if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
+            transferData(
+                data[DATA_PARAM],
+                data[DATA_FORMAT_PARAM],
+                'subscriber',
+                data[DATA_SIZE_PARAM]
+            );
+        else receiveData(data);
+    });
 
     transferTaskSub(socket, taskReciever);
 

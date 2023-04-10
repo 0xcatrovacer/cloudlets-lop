@@ -1,7 +1,14 @@
 // this file is supposed to receive tasks from the end device purposes we are
 // using end device simulator in simulator module
 
-import { DATA_SIZE_PARAM, TASK_PARAM } from '../coms/constants.js';
+import { DEVICE_ID } from '../cloudlet/constants.js';
+import {
+    DATA_FORMAT_PARAM,
+    DATA_PARAM,
+    DATA_SIZE_PARAM,
+    DEVICE_ID_PARAM,
+    TASK_PARAM,
+} from '../coms/constants.js';
 import { logger } from '../logger/index.js';
 import {
     dataSimulator,
@@ -14,12 +21,7 @@ import { checkTaskRunnable } from './validators.js';
 const listenEndDevices = () => {
     // taskSimulator(TIME_INTERVAL, task => taskReciever({ [TASK_PARAM]: task }));
     dataSimulator(TIME_INTERVAL, data => {
-        receiveData(
-            data.data,
-            data.format,
-            data.deviceId,
-            data[DATA_SIZE_PARAM]
-        );
+        receiveData(data);
     });
 };
 

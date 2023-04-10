@@ -1,5 +1,9 @@
 import { DEVICE_ID } from '../cloudlet/constants.js';
-import { DATA_SIZE_PARAM, DEVICE_ID_PARAM } from '../coms/constants.js';
+import {
+    DATA_FORMAT_PARAM,
+    DATA_SIZE_PARAM,
+    DEVICE_ID_PARAM,
+} from '../coms/constants.js';
 import { transferDataPub, transferTaskPub } from '../coms/publishers.js';
 import {
     getAllConnections,
@@ -22,7 +26,7 @@ import {
 } from './constants.js';
 
 const transferDataToCloud = (data, dataSize) => {
-    console.log(`data transfered to cloud: ${data}`);
+    console.log(`data transfered to cloud: ${data}, size: ${dataSize}`);
     global.stats.dataCloudTx++;
 
     global.stats.usedDiskSpace -= dataSize;
@@ -34,12 +38,14 @@ const transferTaskToCloud = task => {
     global.stats.taskCloudTx++;
 };
 
-const receiveData = (data, format, deviceId, dataSize) => {
+const receiveData = data => {
     global.stats.usedDiskSpace += data[DATA_SIZE_PARAM];
     logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
     global.dataQueue.push(data);
 
-    logger(`receive ${format} data of size ${dataSize}Mb from ${deviceId}`);
+    logger(
+        `receive ${data[DATA_FORMAT_PARAM]} data of size ${data[DATA_SIZE_PARAM]}Mb from ${data[DEVICE_ID_PARAM]}`
+    );
 };
 
 const transferData = (

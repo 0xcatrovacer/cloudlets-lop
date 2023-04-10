@@ -13,7 +13,7 @@ const expireData = () => {
 
     logger(`${(preSize - postSize) * DATA_PACKET_SIZE}Mb data deleted`);
 
-    global.stats.usedDiskSpace -= (preSize - postSize) * DATA_PACKET_SIZE; //TODO
+    global.stats.usedDiskSpace -= (preSize - postSize) * DATA_PACKET_SIZE;
 };
 
 export { expireData };
