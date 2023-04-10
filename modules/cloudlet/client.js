@@ -62,7 +62,7 @@ const clientSetup = serverAddr => {
 
     // subscribe to transfer events
     transferDataSub(socket, data => {
-        logger(`recieved transferred data -- ${deviceId}`);
+        logger(`recieved transferred data -- ${data[DEVICE_ID_PARAM]}`);
         if (getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE)
             transferData(
                 data[DATA_PARAM],

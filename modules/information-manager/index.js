@@ -29,7 +29,7 @@ const handleReceiveStorageUpdate = ({
     [DEVICE_ID_PARAM]: deviceId,
     [STATE_PARAM]: state,
 }) => {
-    // logger(`received storage update ${state} from ${deviceId}`);
+    logger(`received storage update ${state} from ${deviceId}`);
     setNodeInformation(deviceId, STORAGE_STATE, state);
 };
 

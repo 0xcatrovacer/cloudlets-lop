@@ -27,7 +27,7 @@ const transferDataSub = (socket, ...callbacks) => {
         logger('transferData subscriber: received data: ', data);
 
         global.stats.dataRx++;
-        global.stats.usedDiskSpace += dataSize;
+        global.stats.usedDiskSpace += data[DATA_SIZE_PARAM];
         logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
         global.dataQueue.push(data);
 

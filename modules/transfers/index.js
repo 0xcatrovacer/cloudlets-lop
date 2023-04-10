@@ -1,5 +1,6 @@
 import { DEVICE_ID } from '../cloudlet/constants.js';
 import {
+    DATA_EXPIRY_PARAM,
     DATA_FORMAT_PARAM,
     DATA_SIZE_PARAM,
     DEVICE_ID_PARAM,
@@ -52,7 +53,8 @@ const transferData = (
     data = TRANSFER_DUMMY_DATA,
     format = TRANSFER_FORMAT_STRING,
     source = 'default',
-    dataSize = DATA_PACKET_SIZE
+    dataSize = DATA_PACKET_SIZE,
+    expiryTime = getExpiryTime()
 ) => {
     logger('transfer data -- init -- source=' + source);
 
@@ -60,13 +62,7 @@ const transferData = (
     let low = [],
         med = [];
 
-    let expiryTime = 0;
-    if (global.dataQueue.length > 0) {
-        expiryTime = global.dataQueue.at(-1).expiryTime;
-        global.dataQueue.pop();
-    } else {
-        expiryTime = getExpiryTime();
-    }
+    let expiryTime = data[DATA_EXPIRY_PARAM];
 
     connections.forEach(connection => {
         if (connection?.stats?.[STORAGE_STATE] === LOW_STATE)
