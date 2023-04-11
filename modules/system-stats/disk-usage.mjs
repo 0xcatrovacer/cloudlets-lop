@@ -1,4 +1,3 @@
-import { expireData } from '../queues-manager/disk-cron.js';
 import { logger } from '../logger/index.js';
 import {
     HIG_STATE,
@@ -8,11 +7,12 @@ import {
     THRESHOLD1_DISK,
     TOTAL_DISK_SPACE,
 } from './constants.js';
+import { runCronJobs } from '../queues-manager/index.js';
 
 const monitorDiskUsage = (timeInterval, callback) => {
     logger('monitor disk usage -- init');
     setInterval(() => {
-        expireData();
+        runCronJobs();
         callback(getDiskStatus());
     }, timeInterval);
 };
@@ -43,4 +43,4 @@ const calcDiskUsage = () => {
     );
 };
 
-export { monitorDiskUsage, getDiskStatus };
+export { monitorDiskUsage, getDiskStatus, calcDiskUsage };

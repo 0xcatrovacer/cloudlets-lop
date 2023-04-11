@@ -9,7 +9,8 @@ import { listenEndDevices } from './modules/tasks/index.js';
 global.connections = {};
 global.server = {};
 global.stats = {
-    usedDiskSpace: parseInt(process.env.INITIAL_DISC_SPACE),
+    usedDiskSpace: parseInt(process.env.INITIAL_DISC_UTIL),
+    usedCpuCapacity: parseInt(process.env.INITIAL_CPU_UTIL),
     dataTx: 0,
     dataRx: 0,
     dataCloudTx: 0,
@@ -19,6 +20,7 @@ global.stats = {
     taskCloudTx: 0,
 };
 global.dataQueue = [];
+global.taskQueue = [];
 
 // load available applications data
 initApplicationsList();

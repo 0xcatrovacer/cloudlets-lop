@@ -4,13 +4,29 @@ import {
     DEVICE_ID_PARAM,
 } from '../coms/constants.js';
 import { DATA_PACKET_SIZE } from '../system-stats/constants.js';
-import { getExpiryTime } from '../utils/index.js';
+import {
+    TASK_APPS_LIST_PARAM,
+    TASK_CPU_LOAD_PARAM,
+    TASK_DISK_LOAD_PARAM,
+    TASK_DUMMY_NAME,
+    TASK_HOPS_PARAM,
+    TASK_ID_PARAM,
+    TASK_NAME_PARAM,
+    TASK_RUNTIME_PARAM,
+    TASK_SOURCE_PARAM,
+    TASK_SOURCE_END_DEVICE,
+} from '../tasks/constants.js';
+import {
+    getExpiryTime,
+    getTaskCpuLoad,
+    getTaskRuntime,
+} from '../utils/index.js';
 
 function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const getRequest = () => {
+const taskRequest = () => {
     let check = Array.from({ length: getRandomInteger(1, 10) }, () =>
         getRandomInteger(1, 10)
     );
@@ -20,11 +36,14 @@ const getRequest = () => {
         return a.length < b.length ? -1 : 1;
     });
     const task = {
-        id: getRandomInteger(1000, 10000),
-        name: 'dummyname',
-        swList: check,
-        source: 'end-device',
-        hops: 0, // number of times task has hopped from one cloudlet to another
+        [TASK_ID_PARAM]: getRandomInteger(1000, 10000),
+        [TASK_NAME_PARAM]: TASK_DUMMY_NAME,
+        [TASK_APPS_LIST_PARAM]: check,
+        [TASK_SOURCE_PARAM]: TASK_SOURCE_END_DEVICE,
+        [TASK_HOPS_PARAM]: 0, // number of times task has hopped from one cloudlet to another
+        [TASK_RUNTIME_PARAM]: getTaskRuntime(),
+        [TASK_CPU_LOAD_PARAM]: getTaskCpuLoad(),
+        [TASK_DISK_LOAD_PARAM]: DATA_PACKET_SIZE,
     };
     return task;
 };
@@ -47,7 +66,7 @@ const dataRequest = () => {
 
 const taskSimulator = (timeInterval, callback) => {
     setInterval(() => {
-        callback(getRequest());
+        callback(taskRequest());
     }, timeInterval);
 };
 
@@ -58,4 +77,4 @@ const dataSimulator = (timeInterval, callback) => {
     }, timeInterval);
 };
 
-export { taskSimulator, dataSimulator };
+export { taskSimulator, dataSimulator, taskRequest };

@@ -69,7 +69,7 @@ const transferDataPub = (
     global.stats.dataTx++;
 };
 
-const transferTaskPub = (socket, deviceId, taskObject) => {
+const transferTaskPub = (socket, deviceId, taskObject, taskToBePopped) => {
     if (!socket) return;
 
     logger(
@@ -83,7 +83,13 @@ const transferTaskPub = (socket, deviceId, taskObject) => {
         [TASK_PARAM]: taskObject,
     });
 
+    logger(`${task[TASK_DISK_LOAD_PARAM]}Mb data deleted`);
+    logger(`${task[TASK_CPU_LOAD_PARAM]}% CPU released`);
     global.stats.taskTx++;
+    if (taskToBePopped) {
+        global.stats.usedDiskSpace -= task[TASK_DISK_LOAD_PARAM];
+        global.stats.usedCpuCapacity -= task[TASK_CPU_LOAD_PARAM];
+    }
 };
 
 const applicationsAvailablePub = (

@@ -7,6 +7,8 @@ import {
     STORAGE_STATE,
 } from '../information-manager/constants.js';
 import { AFFINITY_THRESHOLD, HIG_STATE } from '../system-stats/constants.js';
+import { calcCPUUsage } from '../system-stats/cpu-usage.mjs';
+import { TASK_APPS_LIST_PARAM, TASK_CPU_LOAD_PARAM } from './constants.js';
 
 const checkSubset = (parentArray, subsetArray) => {
     return subsetArray.every(el => {
@@ -17,17 +19,20 @@ const checkSubset = (parentArray, subsetArray) => {
 const checkTaskRunnable = task => {
     // check cpu and storage not high
     if (
-        getNodeStatInformation(DEVICE_ID, CPU_STATE) === HIG_STATE &&
+        getNodeStatInformation(DEVICE_ID, CPU_STATE) === HIG_STATE ||
         getNodeStatInformation(DEVICE_ID, STORAGE_STATE) === HIG_STATE
     ) {
         return false;
     }
 
+    // check cpu quota available
+    if ((1 - calcCPUUsage()) * 100 <= task[TASK_CPU_LOAD_PARAM]) return false;
+
     // check all applications available
     if (
         !checkSubset(
             getNodeStatInformation(DEVICE_ID, APPLICATIONS_STATE),
-            task.swList
+            task[TASK_APPS_LIST_PARAM]
         )
     )
         return false;

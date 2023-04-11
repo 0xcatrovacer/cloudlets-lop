@@ -1,4 +1,5 @@
 import { logger } from '../logger/index.js';
+import { runCronJobs } from '../queues-manager/index.js';
 import {
     HIG_STATE,
     LOW_STATE,
@@ -8,8 +9,9 @@ import {
 } from './constants.js';
 
 const monitorCpuUsage = (timeInterval, callback) => {
-    logger('monitor cpu -- init')
+    logger('monitor cpu -- init');
     setInterval(() => {
+        runCronJobs();
         callback(getCPUStatus());
     }, timeInterval);
 };
@@ -30,7 +32,8 @@ const getCPUStatus = () => {
 };
 
 const calcCPUUsage = () => {
-    const actualCPUUsage = Math.random();
+    // const actualCPUUsage = Math.random();
+    const actualCPUUsage = global.stats.usedCpuCapacity / 100;
     /* Actual Implementation of actualCPUUsage calculation
 
     const os = require('os');
@@ -50,4 +53,4 @@ const calcCPUUsage = () => {
     return actualCPUUsage;
 };
 
-export { monitorCpuUsage };
+export { monitorCpuUsage, calcCPUUsage };

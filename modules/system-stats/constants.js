@@ -37,3 +37,5 @@ export const MID_STATE = 'MID';
 export const HIG_STATE = 'HIG';
 
 export const AFFINITY_THRESHOLD = parseFloat(process.env.N_AFFINITY_TH);
+
+export const TOTAL_CPU_CAPACITY = 100;

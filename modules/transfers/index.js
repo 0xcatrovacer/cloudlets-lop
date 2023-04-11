@@ -12,12 +12,19 @@ import {
 } from '../connections-manager/index.js';
 import { CPU_STATE, STORAGE_STATE } from '../information-manager/constants.js';
 import { logger } from '../logger/index.js';
+import { taskRequest } from '../simulator/end-device-simulator.js';
 import {
     DATA_PACKET_SIZE,
     HIG_STATE,
     LOW_STATE,
     MID_STATE,
 } from '../system-stats/constants.js';
+import {
+    TASK_CPU_LOAD_PARAM,
+    TASK_DISK_LOAD_PARAM,
+    TASK_HOPS_PARAM,
+    TASK_SOURCE_PARAM,
+} from '../tasks/constants.js';
 import { getExpiryTime } from '../utils/index.js';
 import {
     TASK_HOPS_THRESHOLD,
@@ -34,16 +41,18 @@ const transferDataToCloud = (data, dataSize) => {
     logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
 };
 
-const transferTaskToCloud = task => {
+const transferTaskToCloud = (task, taskToBePopped) => {
     console.log('task transfered to cloud', task);
+    logger(`${task[TASK_DISK_LOAD_PARAM]}Mb data deleted`);
+    logger(`${task[TASK_CPU_LOAD_PARAM]}% CPU released`);
     global.stats.taskCloudTx++;
+    if (taskToBePopped) {
+        global.stats.usedDiskSpace -= task[TASK_DISK_LOAD_PARAM];
+        global.stats.usedCpuCapacity -= task[TASK_CPU_LOAD_PARAM];
+    }
 };
 
 const receiveData = data => {
-    global.stats.usedDiskSpace += data[DATA_SIZE_PARAM];
-    logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
-    global.dataQueue.push(data);
-
     logger(
         `receive ${data[DATA_FORMAT_PARAM]} data of size ${data[DATA_SIZE_PARAM]}Mb from ${data[DEVICE_ID_PARAM]}`
     );
@@ -96,24 +105,16 @@ const transferData = (
     }
 };
 
-const transferTask = (
-    task = {
-        id: 10101,
-        name: 'dummyname',
-        swList: [1],
-        source: 'end-device',
-        hops: 0,
-    }
-) => {
-    logger('transfer task -- init -- source=' + task.source);
-    task.hops++;
+const transferTask = (task = taskRequest(), taskToBePopped = true) => {
+    logger('transfer task -- init -- source=' + task[TASK_SOURCE_PARAM]);
+    task[TASK_HOPS_PARAM]++;
 
-    if (task.hops >= TASK_HOPS_THRESHOLD) {
+    if (task[TASK_HOPS_PARAM] >= TASK_HOPS_THRESHOLD) {
         transferTaskToCloud(task);
         return;
     }
 
-    task.source = DEVICE_ID;
+    task[TASK_SOURCE_PARAM] = DEVICE_ID;
     const connections = getAllConnections();
     let LL = [],
         LX = [],
@@ -140,17 +141,32 @@ const transferTask = (
     if (LL.length > 0) {
         const randomDevice =
             LL[Math.floor(Math.random() * LL.length)][DEVICE_ID_PARAM];
-        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+        transferTaskPub(
+            getClientConnection(randomDevice),
+            DEVICE_ID,
+            task,
+            taskToBePopped
+        );
     } else if (LX.length > 0) {
         const randomDevice =
             LX[Math.floor(Math.random() * LX.length)][DEVICE_ID_PARAM];
-        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+        transferTaskPub(
+            getClientConnection(randomDevice),
+            DEVICE_ID,
+            task,
+            taskToBePopped
+        );
     } else if (XL.length > 0) {
         const randomDevice =
             XL[Math.floor(Math.random() * XL.length)][DEVICE_ID_PARAM];
-        transferTaskPub(getClientConnection(randomDevice), DEVICE_ID, task);
+        transferTaskPub(
+            getClientConnection(randomDevice),
+            DEVICE_ID,
+            task,
+            taskToBePopped
+        );
     } else {
-        transferTaskToCloud(task);
+        transferTaskToCloud(task, taskToBePopped);
     }
 };
 

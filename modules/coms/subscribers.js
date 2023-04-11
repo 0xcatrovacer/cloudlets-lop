@@ -7,6 +7,7 @@ import {
     TRANSFER_TASK_BROADCAST_MSG,
     AVAILABLE_APPLICATIONS_MSG,
     DATA_SIZE_PARAM,
+    TASK_PARAM,
 } from './constants.js';
 
 const storageUpdateSub = (socket, ...callbacks) => {
@@ -39,9 +40,9 @@ const transferDataSub = (socket, ...callbacks) => {
 };
 
 const transferTaskSub = (socket, ...callbacks) => {
-    socket.on(TRANSFER_TASK_MSG, data => {
-        callbacks.forEach(callback => callback(data));
+    socket.on(TRANSFER_TASK_MSG, ({ [TASK_PARAM]: task }) => {
         global.stats.taskRx++;
+        callbacks.forEach(callback => callback(task));
     });
 };
 
