@@ -42,7 +42,7 @@ const transferDataSub = (socket, ...callbacks) => {
 const transferTaskSub = (socket, ...callbacks) => {
     socket.on(TRANSFER_TASK_MSG, ({ [TASK_PARAM]: task }) => {
         global.stats.taskRx++;
-        callbacks.forEach(callback => callback(task));
+        callbacks.forEach(callback => callback({ [TASK_PARAM]: task }));
     });
 };
 
