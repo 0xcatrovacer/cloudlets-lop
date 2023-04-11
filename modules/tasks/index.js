@@ -63,7 +63,7 @@ const taskReciever = ({ [TASK_PARAM]: task }) => {
     console.log(
         `received task from ${task[TASK_SOURCE_PARAM]}: validation failed`
     );
-    transferTask(task);
+    transferTask(task, false);
 };
 
 export { listenEndDevices, taskReciever };

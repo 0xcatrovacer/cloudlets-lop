@@ -43,10 +43,10 @@ const transferDataToCloud = (data, dataSize) => {
 
 const transferTaskToCloud = (task, taskToBePopped) => {
     console.log('task transfered to cloud', task);
-    logger(`${task[TASK_DISK_LOAD_PARAM]}Mb data deleted`);
-    logger(`${task[TASK_CPU_LOAD_PARAM]}% CPU released`);
     global.stats.taskCloudTx++;
     if (taskToBePopped) {
+        logger(`${task[TASK_DISK_LOAD_PARAM]}Mb data deleted`);
+        logger(`${task[TASK_CPU_LOAD_PARAM]}% CPU released`);
         global.stats.usedDiskSpace -= task[TASK_DISK_LOAD_PARAM];
         global.stats.usedCpuCapacity -= task[TASK_CPU_LOAD_PARAM];
     }

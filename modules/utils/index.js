@@ -10,7 +10,9 @@ const getExpiryTime = () => {
 const getTaskRuntime = () => {
     // now + 1.5s +/- 0.5s
     return (
-        Date.now() + 1500 + Math.random() * 500 * (Math.random() < 0.5 ? -1 : 1)
+        Date.now() +
+        (parseInt(process.env.TASK_DEADLINE_MEDIAN) || 1500) +
+        Math.random() * 500 * (Math.random() < 0.5 ? -1 : 1)
     );
 };
 
