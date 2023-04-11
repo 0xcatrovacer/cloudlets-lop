@@ -126,16 +126,16 @@ const transferTask = (task = taskRequest(), taskToBePopped = true) => {
             connection?.stats?.[CPU_STATE] === LOW_STATE
         )
             LL.push(connection);
-        else if (
-            connection?.stats?.[STORAGE_STATE] === LOW_STATE &&
-            connection?.stats?.[CPU_STATE] !== HIG_STATE
-        )
-            LX.push(connection);
-        else if (
-            connection?.stats?.[STORAGE_STATE] !== HIG_STATE &&
-            connection?.stats?.[CPU_STATE] === LOW_STATE
-        )
-            XL.push(connection);
+        // else if (
+        //     connection?.stats?.[STORAGE_STATE] === LOW_STATE &&
+        //     connection?.stats?.[CPU_STATE] !== HIG_STATE
+        // )
+        //     LX.push(connection);
+        // else if (
+        //     connection?.stats?.[STORAGE_STATE] !== HIG_STATE &&
+        //     connection?.stats?.[CPU_STATE] === LOW_STATE
+        // )
+        //     XL.push(connection);
     });
 
     if (LL.length > 0) {
@@ -147,24 +147,24 @@ const transferTask = (task = taskRequest(), taskToBePopped = true) => {
             task,
             taskToBePopped
         );
-    } else if (LX.length > 0) {
-        const randomDevice =
-            LX[Math.floor(Math.random() * LX.length)][DEVICE_ID_PARAM];
-        transferTaskPub(
-            getClientConnection(randomDevice),
-            DEVICE_ID,
-            task,
-            taskToBePopped
-        );
-    } else if (XL.length > 0) {
-        const randomDevice =
-            XL[Math.floor(Math.random() * XL.length)][DEVICE_ID_PARAM];
-        transferTaskPub(
-            getClientConnection(randomDevice),
-            DEVICE_ID,
-            task,
-            taskToBePopped
-        );
+        // } else if (LX.length > 0) {
+        //     const randomDevice =
+        //         LX[Math.floor(Math.random() * LX.length)][DEVICE_ID_PARAM];
+        //     transferTaskPub(
+        //         getClientConnection(randomDevice),
+        //         DEVICE_ID,
+        //         task,
+        //         taskToBePopped
+        //     );
+        // } else if (XL.length > 0) {
+        //     const randomDevice =
+        //         XL[Math.floor(Math.random() * XL.length)][DEVICE_ID_PARAM];
+        //     transferTaskPub(
+        //         getClientConnection(randomDevice),
+        //         DEVICE_ID,
+        //         task,
+        //         taskToBePopped
+        //     );
     } else {
         transferTaskToCloud(task, taskToBePopped);
     }
