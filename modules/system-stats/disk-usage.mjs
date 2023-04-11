@@ -1,4 +1,4 @@
-import { expireData } from '../crons/disk-cron.js';
+import { expireData } from '../queues-manager/disk-cron.js';
 import { logger } from '../logger/index.js';
 import {
     HIG_STATE,
