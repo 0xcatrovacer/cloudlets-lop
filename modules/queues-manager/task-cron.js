@@ -6,19 +6,24 @@ import {
 } from '../tasks/constants.js';
 
 const expireTask = () => {
-    global.taskQueue = global.taskQueue.filter(
-        task => task[TASK_RUNTIME_PARAM] > Date.now()
-    );
+    let reduceCpu = 0,
+        reduceDisk = 0;
+    global.taskQueue = global.taskQueue.filter(task => {
+        if (task[TASK_RUNTIME_PARAM] > Date.now()) return true;
 
-    let currentCpu = 0,
-        currentDisk = 0;
-    global.taskQueue.forEach(task => {
-        currentCpu += task[TASK_CPU_LOAD_PARAM];
-        currentDisk += task[TASK_DISK_LOAD_PARAM];
+        reduceCpu += task[TASK_CPU_LOAD_PARAM];
+        reduceDisk += task[TASK_DISK_LOAD_PARAM];
     });
 
-    global.stats.usedDiskSpace = currentDisk;
-    global.stats.usedCpuCapacity = currentCpu;
+    // let currentCpu = 0,
+    //     currentDisk = 0;
+    // global.taskQueue.forEach(task => {
+    //     currentCpu += task[TASK_CPU_LOAD_PARAM];
+    //     currentDisk += task[TASK_DISK_LOAD_PARAM];
+    // });
+
+    global.stats.usedDiskSpace -= reduceDisk;
+    global.stats.usedCpuCapacity -= reduceCpu;
 
     logger(`Current CPU: ${global.stats.usedCpuCapacity}`);
     logger(`Current Disk: ${global.stats.usedDiskSpace}`);
