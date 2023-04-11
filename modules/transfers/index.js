@@ -122,18 +122,18 @@ const transferTask = (task = taskRequest(), taskToBePopped = true) => {
 
     connections.forEach(connection => {
         if (
-            connection?.stats[STORAGE_STATE] === LOW_STATE &&
-            connection?.stats[CPU_STATE] === LOW_STATE
+            connection?.stats?.[STORAGE_STATE] === LOW_STATE &&
+            connection?.stats?.[CPU_STATE] === LOW_STATE
         )
             LL.push(connection);
         else if (
-            connection?.stats[STORAGE_STATE] === LOW_STATE &&
-            connection?.stats[CPU_STATE] !== HIG_STATE
+            connection?.stats?.[STORAGE_STATE] === LOW_STATE &&
+            connection?.stats?.[CPU_STATE] !== HIG_STATE
         )
             LX.push(connection);
         else if (
-            connection?.stats[STORAGE_STATE] !== HIG_STATE &&
-            connection?.stats[CPU_STATE] === LOW_STATE
+            connection?.stats?.[STORAGE_STATE] !== HIG_STATE &&
+            connection?.stats?.[CPU_STATE] === LOW_STATE
         )
             XL.push(connection);
     });
