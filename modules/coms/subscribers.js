@@ -1,29 +1,68 @@
+import { logger } from '../logger/index.js';
 import {
     STORAGE_MSG,
     CPU_MSG,
     TRANSFER_DATA_MSG,
     TRANSFER_TASK_MSG,
-} from './constants';
+    TRANSFER_TASK_BROADCAST_MSG,
+    AVAILABLE_APPLICATIONS_MSG,
+    DATA_SIZE_PARAM,
+    TASK_PARAM,
+} from './constants.js';
 
-const storageUpdateSub = (socket, callback) => {
-    socket.on(STORAGE_MSG, data => callback(data));
+const storageUpdateSub = (socket, ...callbacks) => {
+    socket.on(STORAGE_MSG, data =>
+        callbacks.forEach(callback => callback(data))
+    );
 };
 
-const cpuUpdateSub = (socket, callback) => {
-    socket.on(CPU_MSG, data => callback(data));
+const cpuUpdateSub = (socket, ...callbacks) => {
+    socket.on(CPU_MSG, data => callbacks.forEach(callback => callback(data)));
 };
 
-const transferDataSub = (socket, callback) => {
-    socket.on(TRANSFER_DATA_MSG, data => callback(data));
+const transferDataSub = (socket, ...callbacks) => {
+    logger(
+        `Socket ${{ socket }} subscribing to data with subscriber: ${callbacks}`
+    );
+    socket.on(TRANSFER_DATA_MSG, data => {
+        logger('transferData subscriber: received data: ', data);
+
+        global.stats.dataRx++;
+        global.stats.usedDiskSpace += data[DATA_SIZE_PARAM];
+        logger(`Used disk space -- ${global.stats.usedDiskSpace}`);
+        global.dataQueue.push(data);
+
+        callbacks.forEach(callback => {
+            logger('transferData subscriber: calling method: ', callback);
+            callback(data);
+        });
+    });
 };
 
-const transferTaskSub = (socket, callback) => {
-    socket.on(TRANSFER_TASK_MSG, data => callback(data));
+const transferTaskSub = (socket, ...callbacks) => {
+    socket.on(TRANSFER_TASK_MSG, ({ [TASK_PARAM]: task }) => {
+        global.stats.taskRx++;
+        callbacks.forEach(callback => callback({ [TASK_PARAM]: task }));
+    });
 };
 
-export default {
+const transferTaskBroadcastSub = (socket, ...callbacks) => {
+    socket.on(TRANSFER_TASK_BROADCAST_MSG, data =>
+        callbacks.forEach(callback => callback(data))
+    );
+};
+
+const availableApplicationsSub = (socket, ...callbacks) => {
+    socket.on(AVAILABLE_APPLICATIONS_MSG, data =>
+        callbacks.forEach(callback => callback(data))
+    );
+};
+
+export {
     storageUpdateSub,
     cpuUpdateSub,
     transferDataSub,
     transferTaskSub,
+    transferTaskBroadcastSub,
+    availableApplicationsSub,
 };

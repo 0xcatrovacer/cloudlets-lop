@@ -1,10 +1,44 @@
-require('dotenv').config();
-const { Server } = require('socket.io');
+import 'dotenv/config'; // for loading configs from .env
 
-const PORT = process.env.PORT || 3000;
+import { setupCloudlet } from './modules/cloudlet/index.js';
+import { initApplicationsList } from './modules/information-manager/index.js';
+import { initialiseSystemMonitor } from './modules/system-stats/index.js';
+import { listenEndDevices } from './modules/tasks/index.js';
 
-const io = new Server(PORT);
+// establish global variables
+global.connections = {};
+global.server = {};
+global.stats = {
+    usedDiskSpace: parseInt(process.env.INITIAL_DISC_UTIL),
+    usedCpuCapacity: parseInt(process.env.INITIAL_CPU_UTIL),
+    dataTx: 0,
+    dataRx: 0,
+    dataCloudTx: 0,
+    taskTx: 0,
+    taskRx: 0,
+    taskCx: 0, // task consumed instantly
+    taskCloudTx: 0,
+};
+global.dataQueue = [];
+global.taskQueue = [];
 
-io.on('connection', socket => {
-    console.log('a user connected', socket);
-});
+// load available applications data
+initApplicationsList();
+
+// start monitoring system
+initialiseSystemMonitor();
+
+// start cloudlet
+setupCloudlet();
+
+// Start listening to devices
+listenEndDevices();
+
+const runningTime = parseInt(process.env.TEST_RUNTIME);
+
+if (runningTime !== 0) {
+    setTimeout(() => {
+        console.log(global.stats);
+        process.exit(0);
+    }, runningTime * 1000);
+}
