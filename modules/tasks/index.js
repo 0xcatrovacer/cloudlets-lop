@@ -14,6 +14,7 @@ import {
     dataSimulator,
     taskSimulator,
 } from '../simulator/end-device-simulator.js';
+import { loadResetSimulator } from '../simulator/load-reset-simulator.js';
 import { receiveData, transferTask } from '../transfers/index.js';
 import {
     TASK_CPU_LOAD_PARAM,
@@ -36,6 +37,9 @@ const listenEndDevices = () => {
             global.dataQueue.push(data);
             receiveData(data);
         });
+
+    // simulate for loads reset to given value after given time
+    loadResetSimulator();
 };
 
 const taskReciever = ({ [TASK_PARAM]: task }) => {
